@@ -1,0 +1,1646 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:padding="20dp"
+    android:scrollbarStyle="insideInset"
+    tools:context=".activities.ui.user.UserFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:id="@+id/userPhotoView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo"
+                tools:src="@tools:sample/avatars"
+                tools:srcCompat="@drawable/logo" />
+
+            <Button
+                android:id="@+id/changePhotoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/change_photo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userPhotoView" />
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/name"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/changePhotoButton" />
+
+            <EditText
+                android:id="@+id/nameTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="@string/name"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/changePhotoButton" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/surname"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+            <EditText
+                android:id="@+id/surnameTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="@string/surname"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextField" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/phone"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <EditText
+                android:id="@+id/phoneField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="@string/phone"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/surnameTextField" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="46dp"
+                android:text="@string/email"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <EditText
+                android:id="@+id/emailTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/email"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneField" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/availabilityScheduleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/custom_border"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/availability_schedule"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:fillViewport="true">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:id="@+id/headerTableRow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView44"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/mondayTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/l"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/mondayTextView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/martes_av"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/mondayTextView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/miercoles_av"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/mondayTextView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/jueves_av"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/mondayTextView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/viernes_av"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/mondayTextView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sabado_av"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/mondayTextView7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/domingo_av"
+                            android:textAlignment="center" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_00"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text00view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:text="@string/_00_00"
+                            android:textAlignment="center"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_00_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_00_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_00_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_00_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_00_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_00_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_00_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_01"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text01view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_01_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_01_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_01_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_01_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:minWidth="48dp" />
+
+                        <CheckBox
+                            android:id="@+id/th_01_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_01_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_01_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_01_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_02"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text02view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_02_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_02_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_02_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_02_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_02_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_02_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_02_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_02_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_03"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text03view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_03_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_03_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_03_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_03_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_03_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_03_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_03_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_03_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_04"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text04view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_04_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_04_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_04_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_04_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_04_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_04_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_04_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_04_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_05"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text05view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_05_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_05_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_05_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_05_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_05_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_05_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_05_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_05_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_06"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text06view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_06_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_06_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_06_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_06_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_06_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_06_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_06_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_06_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_07"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text07view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_07_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_07_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_07_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_07_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_07_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_07_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_07_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_07_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_08"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text08view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_08_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_08_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_08_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_08_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_08_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_08_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_08_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_08_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_09"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text09view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/_09_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_09_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_09_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_09_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_09_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_09_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_09_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_09_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text10view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_10_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_10_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_10_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_10_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_10_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_10_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_10_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_10_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text11view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_11_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_11_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_11_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_11_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_11_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_11_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_11_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_11_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text12view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_12_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_12_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_12_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_12_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_12_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_12_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_12_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_12_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text13view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_13_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_13_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_13_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_13_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_13_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_13_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_13_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_13_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text14view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_14_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_14_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_14_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_14_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_14_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_14_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_14_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_14_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_15"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text15view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_15_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_15_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_15_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_15_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_15_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_15_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_15_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_15_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text16view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_16_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_16_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_16_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_16_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_16_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_16_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_16_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_16_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_17"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text17view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_17_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_17_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_17_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_17_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_17_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_17_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_17_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_17_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_18"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text18view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_18_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_18_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_18_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_18_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_18_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_18_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_18_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_18_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_19"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text19view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_19_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_19_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_19_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_19_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_19_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_19_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_19_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_19_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_20"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text20view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_20_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_20_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_20_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_20_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_20_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_20_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_20_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_20_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_21"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text21view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_21_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_21_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_21_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_21_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_21_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_21_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_21_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_21_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_22"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text22view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_22_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_22_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_22_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_22_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_22_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_22_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_22_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_22_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow_23"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/text23view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+
+                            android:text="@string/_23_00"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/mon_23_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/tu_23_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/wed_23_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/th_23_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/fri_23_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sat_23_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                        <CheckBox
+                            android:id="@+id/sun_23_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
+
+                    </TableRow>
+                </TableLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <Button
+                android:id="@+id/saveUserButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Button"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_add_appointment"
+        android:icon="@drawable/baseline_calendar_today_24"
+        android:title="add appointment" />
+
+    <item
+        android:id="@+id/nav_list"
+        android:icon="@drawable/baseline_list_24"
+        android:title="list" />
+
+    <item
+        android:id="@+id/nav_user"
+        android:icon="@drawable/baseline_account_circle_20"
+        android:title="user" />
+
+</menu>
