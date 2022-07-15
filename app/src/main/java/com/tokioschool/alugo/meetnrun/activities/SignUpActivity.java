@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +12,7 @@ import android.widget.EditText;
 import com.tokioschool.alugo.meetnrun.R;
 import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.model.User;
-import com.tokioschool.alugo.meetnrun.util.AlertDialogHandler;
+import com.tokioschool.alugo.meetnrun.util.AlertHandler;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -66,19 +65,19 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (name.compareTo("") == 0 || surname.compareTo("") == 0 ||
                         password.compareTo("") == 0 || repeatedPassword.compareTo("") == 0){
-                    AlertDialog alertDialog = AlertDialogHandler.getErrorSignup(activity);
+                    AlertDialog alertDialog = AlertHandler.getErrorSignup(activity);
                     alertDialog.show();
                 } else if (password.compareTo(repeatedPassword) != 0){
-                    AlertDialog alertDialog = AlertDialogHandler.getErrorPasswordNotEquals(activity);
+                    AlertDialog alertDialog = AlertHandler.getErrorPasswordNotEquals(activity);
                     alertDialog.show();
                 } else {
                     User existingUser = uc.getUser(name);
 
                     if (existingUser != null){
-                        AlertDialog alertDialog = AlertDialogHandler.getErrorExistingUser(activity);
+                        AlertDialog alertDialog = AlertHandler.getErrorExistingUser(activity);
                         alertDialog.show();
                     } else {
-                        uc.createUser(name, password, surname);
+                        uc.createProfessional(name, password, surname);
                         activity.setResult(Activity.RESULT_OK);
                         activity.finish();
                     }

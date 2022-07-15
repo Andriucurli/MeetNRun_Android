@@ -7,152 +7,212 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clipToPadding="true"
-    android:padding="20dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="5dp"
     android:scrollbarStyle="insideInset"
     tools:context=".activities.ui.user.UserFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <ImageView
+            android:id="@+id/userPhotoView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            app:srcCompat="@drawable/logo"
+            tools:src="@tools:sample/avatars"
+            tools:srcCompat="@drawable/logo" />
+
+        <Button
+            android:id="@+id/changePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/change_photo" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <ImageView
-                android:id="@+id/userPhotoView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo"
-                tools:src="@tools:sample/avatars"
-                tools:srcCompat="@drawable/logo" />
-
-            <Button
-                android:id="@+id/changePhotoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/change_photo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userPhotoView" />
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_weight="2"
                 android:text="@string/name"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/changePhotoButton" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/nameTextField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:hint="@string/name"
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/changePhotoButton" />
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="50dp"
+                android:layout_weight="2"
                 android:text="@string/surname"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/surnameTextField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:hint="@string/surname"
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTextField" />
+                android:minHeight="48dp" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="40dp"
-                android:text="@string/phone"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-            <EditText
-                android:id="@+id/phoneField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:ems="10"
-                android:hint="@string/phone"
-                android:imeOptions="actionDone"
-                android:inputType="phone"
-                android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/surnameTextField" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="46dp"
+                android:layout_weight="2"
                 android:text="@string/email"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/emailTextField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/email"
                 android:imeOptions="actionDone"
                 android:inputType="textEmailAddress"
-                android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneField" />
+                android:minHeight="48dp" />
+        </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/phone"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/phoneField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/phone"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/availability_schedule"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/mondayTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/l"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/mondayTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/martes_av"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/mondayTextView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/miercoles_av"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/mondayTextView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/jueves_av"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/mondayTextView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/viernes_av"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/mondayTextView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sabado_av"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/mondayTextView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/domingo_av"
+                android:textAlignment="center" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/availabilityScheduleLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/custom_border"
             android:orientation="vertical"
@@ -160,13 +220,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/availability_schedule"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -176,74 +229,6 @@
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <TableRow
-                        android:id="@+id/headerTableRow"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textView44"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/mondayTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/l"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/mondayTextView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/martes_av"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/mondayTextView3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/miercoles_av"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/mondayTextView4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/jueves_av"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/mondayTextView5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/viernes_av"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/mondayTextView6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/sabado_av"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:id="@+id/mondayTextView7"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/domingo_av"
-                            android:textAlignment="center" />
-                    </TableRow>
 
                     <TableRow
                         android:id="@+id/tableRow_00"
@@ -1631,16 +1616,9 @@
                 </TableLayout>
             </androidx.core.widget.NestedScrollView>
 
-            <Button
-                android:id="@+id/saveUserButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Button"
-                android:textAlignment="center" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 </ScrollView>

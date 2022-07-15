@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.tokioschool.alugo.meetnrun.R;
 import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.model.User;
-import com.tokioschool.alugo.meetnrun.util.AlertDialogHandler;
+import com.tokioschool.alugo.meetnrun.util.AlertHandler;
 import com.tokioschool.alugo.meetnrun.util.CustomSQLHelper;
 import com.tokioschool.alugo.meetnrun.util.Preferences;
 
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void showToastInfoUserCreated(){
-        Toast toast = AlertDialogHandler.getInfoUserCreated(this);
+        Toast toast = AlertHandler.getInfoUserCreated(this);
         toast.show();
     }
 
@@ -77,9 +77,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             User currentUser = uc.getUser(user);
             AlertDialog alert = null;
             if (currentUser == null){
-                alert = AlertDialogHandler.getErrorLogin(this);
+                alert = AlertHandler.getErrorLogin(this);
             } else if (currentUser.getPwd().compareTo(pwdText.getText().toString()) != 0){
-                alert = AlertDialogHandler.getErrorLogin(this);
+                alert = AlertHandler.getErrorLogin(this);
             } else {
                 Preferences.set_user_id(getApplicationContext(), currentUser.getId());
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);

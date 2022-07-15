@@ -21,6 +21,9 @@
         android:theme="@style/Theme.MeetNRun"
         tools:targetApi="31">
         <activity
+            android:name=".activities.QRCodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SignUpPacientActivity"
             android:exported="false" />
         <activity

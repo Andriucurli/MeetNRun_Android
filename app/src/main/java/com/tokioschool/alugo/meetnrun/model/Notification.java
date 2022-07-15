@@ -1,13 +1,14 @@
 package com.tokioschool.alugo.meetnrun.model;
 
 public class Notification {
-    User sender = null;
-    User receiver = null;
+    int sender_id;
+    int receiver_id;
     String message;
     boolean seen;
-    NotificationType type;
+    Type type;
 
-    public enum NotificationType {
+    public enum Type {
+        CREATED,
         NEED_CONFIRMATION,
         CONFIRMED,
         NEED_MODIFICATION,
@@ -15,19 +16,11 @@ public class Notification {
         CANCELLED
     }
 
-    public Notification(User sender, User receiver, String message, boolean seen, NotificationType type) {
-        this.sender = sender;
-        this.receiver = receiver;
+    public Notification(int sender_id, int receiver_id, String message, boolean seen, Type type) {
+        this.sender_id = sender_id;
+        this.receiver_id = receiver_id;
         this.message = message;
         this.seen = seen;
         this.type = type;
-    }
-
-    public User getSender() {
-        return sender;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }

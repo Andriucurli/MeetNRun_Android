@@ -18,7 +18,6 @@ public class Contracts {
         public static final String PROFESSIONAL_ID = "professional_id";
         public static final String SCHEDULE = "schedule";
 
-
         public static final String[] Columns = {ID, NAME, SURNAME, PASSWORD, PHONE, EMAIL, PHOTO, PROFESSIONAL_ID, SCHEDULE};
 
     }
@@ -36,19 +35,6 @@ public class Contracts {
         public static final String[] Columns = {ID, NAME, DESCRIPTION, PHOTO, PROFESSIONAL_ID};
     }
 
-    public static abstract class AvailablePeriodEntry implements BaseColumns {
-
-        public static final String TABLE_NAME ="AvailablePeriod";
-
-        public static final String ID = "period_id";
-        public static final String DAY = "day";
-        public static final String BEGIN_TIME = "beginTime";
-        public static final String END_TIME = "endTime";
-        public static final String USER_ID = "user_id";
-
-        public static final String[] Columns = {ID, DAY, BEGIN_TIME, END_TIME, USER_ID};
-    }
-
     public static abstract class AppointmentEntry implements BaseColumns {
 
         public static final String TABLE_NAME ="Appointment";
@@ -56,10 +42,11 @@ public class Contracts {
         public static final String ID = "appointment_id";
         public static final String PROFESSIONAL_ID = "professional_id";
         public static final String USER_ID = "user_id";
-        public static final String PERIOD_ID = "period_id";
+        public static final String DAY = "day";
+        public static final String HOUR = "hour";
         public static final String STATUS = "status";
 
-        public static final String[] Columns = {ID, PROFESSIONAL_ID, USER_ID, PERIOD_ID, STATUS};
+        public static final String[] Columns = {ID, PROFESSIONAL_ID, USER_ID, DAY, HOUR, STATUS};
     }
 
     public static abstract class NotificationEntry implements BaseColumns {

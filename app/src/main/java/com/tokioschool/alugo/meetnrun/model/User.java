@@ -8,8 +8,8 @@ public class User {
     String phone;
     String email;
     byte[] photo = null;
-
     byte[] schedule;
+    byte[] availablePeriod;
 
     public void setSchedule(byte[] schedule) {
         this.schedule = schedule;
@@ -30,6 +30,8 @@ public class User {
     public Integer getProfessional_id() {
         return professional_id;
     }
+
+    public boolean isProfessional(){return professional_id == null;}
 
     Integer professional_id;
 

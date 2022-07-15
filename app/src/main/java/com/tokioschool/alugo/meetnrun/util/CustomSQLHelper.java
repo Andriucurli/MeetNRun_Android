@@ -11,7 +11,7 @@ import com.tokioschool.alugo.meetnrun.model.Contracts;
 public class CustomSQLHelper extends SQLiteOpenHelper {
 
     static String name = "meetnrun.db";
-    static int DB_Version = 1;
+    static int DB_Version = 2;
 
     public CustomSQLHelper(Context context){
         super(context, name, null, DB_Version);
@@ -23,28 +23,22 @@ public class CustomSQLHelper extends SQLiteOpenHelper {
     String userCreationStr = "CREATE TABLE User (user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             "name TEXT, surname TEXT, password TEXT, phone TEXT, email TEXT, photo BLOB, professional_id INTEGER, schedule BLOB," +
             "FOREIGN KEY (professional_id) REFERENCES User (user_id));";
-    String groupCreationStr = "CREATE TABLE UserGroup (group_id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL, " +
-            "name TEXT, description TEXT, photo BLOB, professional_id INTEGER, FOREIGN KEY (professional_id) REFERENCES User (user_id) );";
-    String groupUserCreationStr = "CREATE TABLE GroupUser (group_id INTEGER , " +
-            "user_id INTEGER, FOREIGN KEY (group_id) REFERENCES UserGroup(group_id), FOREIGN KEY (user_id) REFERENCES User (user_id));";
-    String availablePeriodCreationStr = "CREATE TABLE AvailablePeriod (period_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            "day INTEGER, beginTime REAL, endTime REAL, user_id INTEGER, FOREIGN KEY (user_id) REFERENCES User (user_id));";
     String AppointmentCreationStr = "CREATE TABLE Appointment (appointment_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            "professional_id INTEGER, user_id INTEGER, period_id INTEGER, status INTEGER, FOREIGN KEY (professional_id) REFERENCES User(user_id)," +
-            "FOREIGN KEY (user_id) REFERENCES User(user_id), FOREIGN KEY (period_id) REFERENCES AvailablePeriod (period_id));";
-
+            "professional_id INTEGER, user_id INTEGER, day INTEGER, hour INTEGER, status INTEGER, FOREIGN KEY (professional_id) REFERENCES User(user_id)," +
+            "FOREIGN KEY (user_id) REFERENCES User(user_id));";
     String NotificationCreationStr = "CREATE TABLE Notification (notification_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             "sender_id INTEGER, receiver_id INTEGER, message TEXT, seen INTEGER, type TEXT, appointment_id INTEGER," +
             " FOREIGN KEY (sender_id) REFERENCES User(user_id), FOREIGN KEY (receiver_id) REFERENCES User(user_id)," +
             "FOREIGN KEY (appointment_id) REFERENCES Appointment (appointment_id));";
 
+    /*version 2*/
+
+    String userUpdateStr2 = "ALTER TABLE User ADD COLUMN availablePeriod BLOB;";
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(userCreationStr);
-        db.execSQL(groupCreationStr);
-        db.execSQL(groupUserCreationStr);
-        db.execSQL(availablePeriodCreationStr);
         db.execSQL(AppointmentCreationStr);
         db.execSQL(NotificationCreationStr);
 
@@ -67,6 +61,8 @@ public class CustomSQLHelper extends SQLiteOpenHelper {
         for (int i = oldVersion; oldVersion<newVersion;i++){
             int versionToUpdate = i+1;
             switch (versionToUpdate){
+                case 2:
+                    db.execSQL(userUpdateStr2);
                 default:
                     return;
             }

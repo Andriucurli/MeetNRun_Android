@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class AlertDialogHandler {
+public class AlertHandler {
 
     public static AlertDialog.Builder builder;
 

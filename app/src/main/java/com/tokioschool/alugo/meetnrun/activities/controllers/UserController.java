@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.tokioschool.alugo.meetnrun.model.Contracts;
 import com.tokioschool.alugo.meetnrun.model.Contracts.UserEntry;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.CustomSQLHelper;
@@ -18,11 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserController {
-
-    private CustomSQLHelper sqlHelper = null;
-    private Context context;
-
+public class UserController extends BaseController {
 
     public static final byte[] initialScheduleByDay = new byte[]{(byte) 0x00,(byte) 0xFF,(byte) 0xF8,
             (byte) 0x00,(byte) 0xFF,(byte) 0xF8,
@@ -32,10 +29,8 @@ public class UserController {
             (byte) 0x00,(byte) 0xFF,(byte) 0xF8,
             (byte) 0x00,(byte) 0xFF,(byte) 0xF8};
 
-    public UserController(Context context){
-
-        sqlHelper = new CustomSQLHelper(context);
-        this.context = context;
+    public UserController(Context context) {
+        super(context);
     }
 
     private User getUserFromCursor(Cursor cursor){
@@ -126,7 +121,20 @@ public class UserController {
         db.close();
     }
 
-    public boolean createUser (String name, String password, String surname){
+    public User createProfessional(String name, String password, String surname){
+        User result;
+        createUser(name, password, surname, null, null);
+
+        return getUser(name);
+    }
+
+    public User createPacient(String name, String email, int professional_id){
+        User result;
+        createUser(name, name, name, email, professional_id);
+
+        return getUser(name);
+    }
+    public boolean createUser (String name, String password, String surname, String email, Integer professional_id){
 
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
@@ -136,17 +144,13 @@ public class UserController {
         values.put(UserEntry.NAME, name);
         values.put(UserEntry.PASSWORD, password);
         values.put(UserEntry.SURNAME, surname);
-
-        StringBuilder scheduleBuilder = new StringBuilder();
-        for (int i = 0; i < 7; i++){
-            scheduleBuilder.append(new String(initialScheduleByDay));
-            scheduleBuilder.append("/");
+        values.put(UserEntry.EMAIL, email);
+        values.put(UserEntry.PROFESSIONAL_ID, professional_id);
+        if (professional_id == null){
+            values.put(Contracts.UserEntry.SCHEDULE, initialScheduleByDay);
         }
 
-        values.put(UserEntry.SCHEDULE, scheduleBuilder.toString());
-
         db.insert(UserEntry.TABLE_NAME, null, values);
-
 
         return true;
     }

@@ -3,6 +3,7 @@ package com.tokioschool.alugo.meetnrun.activities.ui.user;
 import static com.tokioschool.alugo.meetnrun.util.Utils.isBitSet;
 import static com.tokioschool.alugo.meetnrun.util.Utils.setBit;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,19 +24,20 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
+import androidx.core.content.IntentCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.zxing.common.BitArray;
 import com.tokioschool.alugo.meetnrun.BuildConfig;
 import com.tokioschool.alugo.meetnrun.R;
 import com.tokioschool.alugo.meetnrun.activities.HomeActivity;
-import com.tokioschool.alugo.meetnrun.activities.controllers.AvailablePeriodController;
+import com.tokioschool.alugo.meetnrun.activities.QRCodeActivity;
 import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.databinding.FragmentUserBinding;
 import com.tokioschool.alugo.meetnrun.model.User;
@@ -42,7 +45,6 @@ import com.tokioschool.alugo.meetnrun.util.Utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -56,7 +58,8 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
     private EditText emailTextField;
     private ImageView photoView;
     private Button changePhotoButton;
-    private ActivityResultLauncher<Uri> launcher;
+    private ActivityResultLauncher<Uri> changePhotolauncher;
+    private ActivityResultLauncher<Intent> addUserLauncher;
     private Uri photoUri = null;
 
     private UserController uc;
@@ -76,7 +79,14 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         //userViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         uc = new UserController(getContext());
-         launcher = registerForActivityResult(new ActivityResultContracts.TakePicture(),
+        addUserLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        return;
+                    }
+                });
+        changePhotolauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(),
                 new ActivityResultCallback<Boolean>() {
                     @Override
                     public void onActivityResult(Boolean result) {
@@ -109,6 +119,19 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
 
         menu.clear();
         inflater.inflate(R.menu.top_tab_menu_home, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.adduser_button:
+                Intent intent = new Intent(getContext(), QRCodeActivity.class);
+                addUserLauncher.launch(intent);
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -275,7 +298,7 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
                         image);
             }
 
-            launcher.launch(photoUri);
+            changePhotolauncher.launch(photoUri);
         }
     }
 
