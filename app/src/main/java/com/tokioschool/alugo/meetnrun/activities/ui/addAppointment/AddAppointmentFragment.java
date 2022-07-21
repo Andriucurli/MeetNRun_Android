@@ -1,5 +1,6 @@
 package com.tokioschool.alugo.meetnrun.activities.ui.addAppointment;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,7 @@ import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.adapters.CustomSpinnerAdapter;
 import com.tokioschool.alugo.meetnrun.databinding.FragmentAddAppointmentBinding;
 import com.tokioschool.alugo.meetnrun.model.User;
+import com.tokioschool.alugo.meetnrun.util.AlertHandler;
 import com.tokioschool.alugo.meetnrun.util.Utils;
 
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
     private FragmentAddAppointmentBinding binding;
     private HomeActivity mainActivity;
     private UserController uc;
+    private AppointmentController ac;
     private User user;
 
     private TextView anythingTextView;
@@ -50,6 +54,7 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
     private void loadUIelems(){
 
         uc = new UserController(getContext());
+        ac = new AppointmentController(getContext());
         mainActivity = (HomeActivity) getActivity();
         mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mainActivity.setTitle("");
@@ -82,7 +87,13 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
 
     private void loadHourSpinner(int day){
         List<String> hours = new ArrayList<>();
-        byte[] schedule = user.getSchedule();
+        byte[] schedule;
+        if (user.isProfessional()){
+            schedule = user.getSchedule();
+        } else {
+            User professional = uc.getUser(user.getProfessional_id());
+            schedule = professional.getSchedule();
+        }
 
         //los dias estan divididos en 3 bytes. 3 bytes = 3*8 bits = 24 horas
 
@@ -90,7 +101,7 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
             byte bytei = schedule[day*3+i];
 
             for (int j = 7; j >= 0; j--,hour++){
-                if (Utils.isBitSet(bytei, j)){
+                if (Utils.isBitSet(bytei, j) && ac.checkAppointment(user, day, hour)){
                     hours.add(String.format("%02d:00", hour));
                 }
             }
@@ -104,7 +115,7 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
     private void initForm(){
 
         if (user.isProfessional()){
-            anythingTextView.setText("Pacient");
+            anythingTextView.setText(R.string.pacient);
             pacients = uc.getPacients(user);
             List<String> names = new ArrayList<>();
             for (User pacient:
@@ -224,18 +235,20 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
         public void onClick(View v) {
 
             if (hour == null || day == null ||
-                    (!user.isProfessional() && pacientPos == null )){
-                //TODO toast
+                    (user.isProfessional() && pacientPos == null )){
+                Toast toast = AlertHandler.getWarningEmptyFields(getContext());
+                toast.show();
                 return;
-            }
-
-            if (user.isProfessional()){
-                User pacient = uc.getUser(pacientPos);
-                ac.createAppointment(user, pacient, day, hour);
-
             } else {
-                User professional = uc.getUser(user.getProfessional_id());
-                ac.requestAppointment(professional, user, day, hour);
+                if (user.isProfessional()){
+                    ac.createAppointment(user, pacients.get(pacientPos), day, hour);
+
+                } else {
+                    User professional = uc.getUser(user.getProfessional_id());
+                    ac.requestAppointment(professional, user, day, hour);
+                }
+                Toast toast = AlertHandler.getInfoAppointmentCreated(getContext());
+                toast.show();
             }
         }
     }

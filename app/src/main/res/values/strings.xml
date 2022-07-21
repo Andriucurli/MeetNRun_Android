@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">MeetNRun</string>
     <!-- TODO: Remove or change this placeholder text.xml -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_home" translatable="false">HomeActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="tittle_add_appointment">Add Appointment</string>
     <string name="tittle_list">List</string>
@@ -12,49 +12,63 @@
     <string name="user_info">User Info</string>
     <string name="availability_schedule">Availability Schedule</string>
     <string name="name">Name</string>
-    <string name="email">email</string>
-    <string name="_11_00">11:00</string>
-    <string name="_20_00">20:00</string>
-    <string name="_19_00">19:00</string>
-    <string name="_17_00">17:00</string>
-    <string name="l">L</string>
-    <string name="martes_av">M</string>
-    <string name="miercoles_av">X</string>
-    <string name="jueves_av">J</string>
-    <string name="viernes_av">V</string>
-    <string name="sabado_av">S</string>
-    <string name="domingo_av">D</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="_11_00" translatable="false">11:00</string>
+    <string name="_20_00" translatable="false">20:00</string>
+    <string name="_19_00" translatable="false">19:00</string>
+    <string name="_17_00" translatable="false">17:00</string>
+    <string name="l">Mon</string>
+    <string name="martes_av">Tue</string>
+    <string name="miercoles_av">Wed</string>
+    <string name="jueves_av">Thu</string>
+    <string name="viernes_av">Fri</string>
+    <string name="sabado_av">Sat</string>
+    <string name="domingo_av">Sun</string>
     <string name="change_photo">Change photo</string>
-    <string name="_00_00">00:00</string>
-    <string name="_01_00">01:00</string>
-    <string name="_02_00">02:00</string>
-    <string name="_03_00">03:00</string>
-    <string name="_18_00">18:00</string>
-    <string name="_21_00">21:00</string>
-    <string name="_16_00">16:00</string>
-    <string name="_14_00">14:00</string>
-    <string name="_06_00">06:00</string>
-    <string name="_04_00">04:00</string>
-    <string name="_05_00">05:00</string>
-    <string name="_15_00">15:00</string>
-    <string name="_12_00">12:00</string>
-    <string name="_10_00">10:00</string>
-    <string name="_09_00">09:00</string>
-    <string name="_08_00">08:00</string>
-    <string name="_13_00">13:00</string>
-    <string name="_07_00">07:00</string>
-    <string name="_22_00">22:00</string>
-    <string name="_23_00">23:00</string>
+    <string name="_00_00" translatable="false">00:00</string>
+    <string name="_01_00" translatable="false">01:00</string>
+    <string name="_02_00" translatable="false">02:00</string>
+    <string name="_03_00" translatable="false">03:00</string>
+    <string name="_18_00" translatable="false">18:00</string>
+    <string name="_21_00" translatable="false">21:00</string>
+    <string name="_16_00" translatable="false">16:00</string>
+    <string name="_14_00" translatable="false">14:00</string>
+    <string name="_06_00" translatable="false">06:00</string>
+    <string name="_04_00" translatable="false">04:00</string>
+    <string name="_05_00" translatable="false">05:00</string>
+    <string name="_15_00" translatable="false">15:00</string>
+    <string name="_12_00" translatable="false">12:00</string>
+    <string name="_10_00" translatable="false">10:00</string>
+    <string name="_09_00" translatable="false">09:00</string>
+    <string name="_08_00" translatable="false">08:00</string>
+    <string name="_13_00" translatable="false">13:00</string>
+    <string name="_07_00" translatable="false">07:00</string>
+    <string name="_22_00" translatable="false">22:00</string>
+    <string name="_23_00" translatable="false">23:00</string>
     <string name="phone">Phone</string>
     <string name="surname">Surname</string>
     <string name="save_user_info">Save User Info</string>
     <string name="day">Day</string>
     <string name="hour">Hour</string>
     <string name="request_appointment">Request Appointment</string>
-    <string name="anythingSpinner_contentDescription">anything</string>
+    <string name="anythingSpinner_contentDescription" translatable="false">anything</string>
     <string name="username">username</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
     <string name="sign_up_as_professional">Sign up as Professional</string>
     <string name="sign_up_as_a_pacient">Sign up as a pacient</string>
+    <string name="notification_text_appointment_confirmed">Appointment Confirmed</string>
+    <string name="message_error_login">Cannot log in. Please, check your username and password or try it later.</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="message_error_signup">Cannot sign up. Please, check all the fields or try it later.</string>
+    <string name="message_error_passwordNotEquals">Cannot sign up, the passwords are different.</string>
+    <string name="message_error_existingUser">Cannot sign up, the username is already on use.</string>
+    <string name="message_info_userCreated">User created successfully</string>
+    <string name="message_warning_emptyFields">Please, fill all the fields</string>
+    <string name="message_warning_hourWithExistingAppointment">This hour cannot be disabled because there is a confirmed appointment using this period.</string>
+    <string name="message_info_appointmentCreated">Appointment created successfully</string>
+    <string name="description_notification_needsConfirmation">The appointment with %s would be set for %s %02d:00.</string>
+    <string name="description_notification_created">The appointment with %s is set for %s %02d:00.</string>
+    <string name="pacient">Pacient</string>
+    <string name="spinner_select_one">select one</string>
 </resources>

@@ -59,8 +59,9 @@ public class Contracts {
         public static final String MESSAGE = "message";
         public static final String SEEN = "seen";
         public static final String TYPE = "type";
+        public static final String APPOINTMENT_ID = "appointment_id";
 
-        public static final String[] Columns = {ID, SENDER_ID, RECEIVER_ID, MESSAGE, SEEN, TYPE};
+        public static final String[] Columns = {ID, SENDER_ID, RECEIVER_ID, MESSAGE, SEEN, TYPE, APPOINTMENT_ID};
     }
 
 

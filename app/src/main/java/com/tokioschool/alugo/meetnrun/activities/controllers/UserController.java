@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.google.zxing.common.StringUtils;
 import com.tokioschool.alugo.meetnrun.model.Contracts;
 import com.tokioschool.alugo.meetnrun.model.Contracts.UserEntry;
 import com.tokioschool.alugo.meetnrun.model.User;
@@ -121,20 +122,22 @@ public class UserController extends BaseController {
         db.close();
     }
 
-    public User createProfessional(String name, String password, String surname){
-        User result;
-        createUser(name, password, surname, null, null);
+    public long createProfessional(String name, String password, String surname){
+        return createUser(name, password, surname, null, null);
 
-        return getUser(name);
     }
 
-    public User createPacient(String name, String email, int professional_id){
-        User result;
-        createUser(name, name, name, email, professional_id);
+    public long createPacient(String name, String email, int professional_id){
 
-        return getUser(name);
+        return createUser(name, name, name, email, professional_id);
     }
-    public boolean createUser (String name, String password, String surname, String email, Integer professional_id){
+    public long createUser (String name, String password, String surname, String email, Integer professional_id){
+
+        if (name == null || name.compareTo("") == 0 ||
+                password == null || password.compareTo("") == 0 ||
+                surname == null || surname.compareTo("") == 0){
+            return -1;
+        }
 
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
@@ -150,9 +153,11 @@ public class UserController extends BaseController {
             values.put(Contracts.UserEntry.SCHEDULE, initialScheduleByDay);
         }
 
-        db.insert(UserEntry.TABLE_NAME, null, values);
+        long id = db.insert(UserEntry.TABLE_NAME, null, values);
 
-        return true;
+        db.close();
+
+        return id;
     }
 
     public void setUserPhoto(User user, Uri photo) throws IOException {

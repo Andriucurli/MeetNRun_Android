@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -38,9 +39,11 @@ import com.tokioschool.alugo.meetnrun.BuildConfig;
 import com.tokioschool.alugo.meetnrun.R;
 import com.tokioschool.alugo.meetnrun.activities.HomeActivity;
 import com.tokioschool.alugo.meetnrun.activities.QRCodeActivity;
+import com.tokioschool.alugo.meetnrun.activities.controllers.AppointmentController;
 import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.databinding.FragmentUserBinding;
 import com.tokioschool.alugo.meetnrun.model.User;
+import com.tokioschool.alugo.meetnrun.util.AlertHandler;
 import com.tokioschool.alugo.meetnrun.util.Utils;
 
 import java.io.File;
@@ -63,6 +66,7 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
     private Uri photoUri = null;
 
     private UserController uc;
+    private AppointmentController ac;
     HomeActivity activity;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -79,6 +83,7 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         //userViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         uc = new UserController(getContext());
+        ac = new AppointmentController(getContext());
         addUserLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -213,6 +218,13 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         byte[] schedule = activity.currentUser.getSchedule();
 
         int hour = Integer.parseInt(elems[1]);
+
+        if (!isChecked && !ac.checkAppointment(activity.currentUser, day.ordinal(), hour)){
+            buttonView.setChecked(true);
+            Toast toast = AlertHandler.getWarningHourWithExistingAppointment(getContext());
+            toast.show();
+            return;
+        }
 
         int bytei = hour/8;
 

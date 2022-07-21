@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MeetNRun</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="tittle_add_appointment">Añadir cita</string>
+    <string name="tittle_list">Listado</string>
+    <string name="title_user">Usuario</string>
+    <string name="user_info">Info de Usuario</string>
+    <string name="availability_schedule">Horario de disponibilidad</string>
+    <string name="name">Nombre</string>
+    <string name="l">L</string>
+    <string name="martes_av">M</string>
+    <string name="miercoles_av">X</string>
+    <string name="jueves_av">J</string>
+    <string name="viernes_av">V</string>
+    <string name="sabado_av">S</string>
+    <string name="domingo_av">D</string>
+    <string name="change_photo">Cambiar foto</string>
+    <string name="phone">Telefono</string>
+    <string name="surname">Nombre</string>
+    <string name="save_user_info">Guarda Info</string>
+    <string name="day">Dia</string>
+    <string name="hour">Hora</string>
+    <string name="request_appointment">Solicitar cita</string>
+    <string name="username">usuario</string>
+    <string name="password">contraseña</string>
+    <string name="log_in">Entrar</string>
+    <string name="sign_up_as_professional">Registrar como profesional</string>
+    <string name="sign_up_as_a_pacient">Registrar como paciente</string>
+    <string name="notification_text_appointment_confirmed">Cita confirmada</string>
+    <string name="message_error_login">No puede entrar. Por favor, compruebe su usuario y contraseña o intentelo más tarde.</string>
+    <string name="message_error_signup">No puede registrarse. Compruebe que estén llenos los campos o intentelo más tarde.</string>
+    <string name="message_error_passwordNotEquals">No puede registrarse, las contraseñas son distintas.</string>
+    <string name="message_error_existingUser">No puede registrarse, ese usuario ya existe.</string>
+    <string name="message_info_userCreated">Usuario creado correctamente</string>
+    <string name="message_warning_emptyFields">Por favor, rellene todos los campos</string>
+    <string name="message_warning_hourWithExistingAppointment">Esta hora no puede ser deshabilitada porque existe una cita confirmada usando este periodo.</string>
+    <string name="message_info_appointmentCreated">Cita creada correctamente</string>
+    <string name="description_notification_needsConfirmation">Esta cita con %s sería creada para %s %02d:00.</string>
+    <string name="description_notification_created">Esta cita con %s ha sido creada para %s %02d:00.</string>
+    <string name="pacient">Paciente</string>
+    <string name="spinner_select_one">seleccciona uno</string>
+</resources>

@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/activity_qrcode.xml" value="0.20643363728470113" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_sign_up_pacient.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/appointment_list_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/calendar_cell.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/layout/fragment_add_appointment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2171875" />

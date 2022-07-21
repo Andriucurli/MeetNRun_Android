@@ -1,5 +1,7 @@
 package com.tokioschool.alugo.meetnrun.util;
 
+import com.tokioschool.alugo.meetnrun.model.Appointment;
+
 public class Utils {
 
     public static Boolean isBitSet(byte b, int bit)
@@ -57,5 +59,24 @@ public class Utils {
                 break;
         }
         return day;
+    }
+
+    public static Appointment.Status getAppointmentStatusByInt(int i){
+        Appointment.Status status;
+        switch (i){
+            case 0:
+                status = Appointment.Status.REQUESTED;
+                break;
+            case 1:
+                status = Appointment.Status.CONFIRMED;
+                break;
+            case 2:
+                status = Appointment.Status.CANCELLED;
+                break;
+            default:
+                status = Appointment.Status.MODIFICATION_REQUESTED;
+                break;
+        }
+        return status;
     }
 }

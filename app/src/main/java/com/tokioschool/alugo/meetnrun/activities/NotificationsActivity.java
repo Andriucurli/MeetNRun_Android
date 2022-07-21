@@ -40,13 +40,19 @@ public class NotificationsActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         notificationsRV.setLayoutManager(llm);
 
-        List<Notification> notifications = nc.getNotificationsByUser(currentUser);
+        List<Notification> notifications = nc.getActiveNotificationsByUser(currentUser);
 
-        adapter = new NotificationViewAdapter(notifications);
+        adapter = new NotificationViewAdapter(this);
 
         notificationsRV.setAdapter(adapter);
-
-
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Notification> data = nc.getActiveNotificationsByUser(currentUser);
+        adapter.setData(data);
+        adapter.notifyDataSetChanged();
+    }
 }

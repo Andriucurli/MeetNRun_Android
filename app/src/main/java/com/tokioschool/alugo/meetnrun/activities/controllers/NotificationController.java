@@ -20,7 +20,15 @@ public class NotificationController extends BaseController {
         super(context);
     }
 
-    public boolean createNotification(int sender_id, int receiver_id, String message, Notification.Type type){
+    public long createNotification(int sender_id, int receiver_id, String message, Notification.Type type, Integer appointment_id){
+
+        if (sender_id == -1 ||
+        receiver_id == -1 ||
+        type == null){
+            return -1;
+        }
+
+
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -30,36 +38,46 @@ public class NotificationController extends BaseController {
         values.put(NotificationEntry.RECEIVER_ID, receiver_id);
         values.put(NotificationEntry.MESSAGE, message);
         values.put(NotificationEntry.SEEN, 0);
-        values.put(NotificationEntry.TYPE, type.ordinal());
+        values.put(NotificationEntry.TYPE, type.name());
 
-        db.insert(NotificationEntry.TABLE_NAME, null, values);
+        if (appointment_id != null){
+            values.put(NotificationEntry.APPOINTMENT_ID, appointment_id);
+        }
+
+        long id = db.insert(NotificationEntry.TABLE_NAME, null, values);
 
         db.close();
-        return true;
+        return id;
     }
 
-    public List<Notification> getNotificationsByUser(User user){
+    public List<Notification> getActiveNotificationsByUser(User user){
 
         List<Notification> result = new ArrayList<>();
 
         SQLiteDatabase db = sqlHelper.getReadableDatabase();
 
         Cursor cursor = db.query(NotificationEntry.TABLE_NAME, NotificationEntry.Columns,
-                NotificationEntry.RECEIVER_ID + " LIKE ?", new String[]{String.valueOf(user.getId())},
+                String.format("%s LIKE ? AND %s = 0", NotificationEntry.RECEIVER_ID, NotificationEntry.SEEN),
+                new String[]{String.valueOf(user.getId())},
                 null, null, null);
 
         while (cursor.moveToNext()){
-            User sender = null;
+
             int senderI = cursor.getColumnIndex(NotificationEntry.SENDER_ID);
             int sender_id = cursor.getInt(senderI);
 
             int messageI = cursor.getColumnIndex(NotificationEntry.MESSAGE);
             int seenI = cursor.getColumnIndex(NotificationEntry.SEEN);
             int typeI = cursor.getColumnIndex(NotificationEntry.TYPE);
+            int appointment_idi = cursor.getColumnIndex(NotificationEntry.APPOINTMENT_ID);
+            int id = cursor.getColumnIndex(NotificationEntry.ID);
 
-            result.add(new Notification(sender_id, user.getId(), cursor.getString(messageI),
+            Integer appointment_id = !cursor.isNull(appointment_idi)? cursor.getInt(appointment_idi) : null;
+
+            result.add(new Notification(cursor.getInt(id),sender_id, user.getId(), cursor.getString(messageI),
                     cursor.getInt(seenI) == 1,
-                    Notification.Type.valueOf(cursor.getString(typeI))));
+                    Notification.Type.valueOf(cursor.getString(typeI)),
+                    appointment_id));
         }
 
         cursor.close();
@@ -67,5 +85,29 @@ public class NotificationController extends BaseController {
         return result;
     }
 
+    public boolean markNotificationAsSeen(int notification_id){
+        boolean result = true;
 
+        if (notification_id == -1){
+            result = false;
+        }
+
+        if (result){
+            SQLiteDatabase db = sqlHelper.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(NotificationEntry.SEEN, 1);
+
+            int updated = db.update(NotificationEntry.TABLE_NAME,contentValues,
+                    NotificationEntry.ID + " = ?", new String[]{String.valueOf(notification_id)});
+
+            if (updated != 1){
+                result = false;
+            }
+
+            db.close();
+        }
+
+        return result;
+    }
 }

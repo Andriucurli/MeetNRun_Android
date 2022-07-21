@@ -46,7 +46,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
         // Just an example using a simple TextView. Create whatever default view
         // to suit your needs, inflating a separate layout if it's cleaner.
         TextView view = new TextView(getContext());
-        view.setText("select one");
+        view.setText(R.string.spinner_select_one);
         //int spacing = getContext().getResources().getDimensionPixelSize(R.dimen.);
         //view.setPadding(0, spacing, 0, spacing);
 
