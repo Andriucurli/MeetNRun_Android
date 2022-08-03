@@ -1,14 +1,12 @@
-package com.tokioschool.alugo.meetnrun.activities.controllers;
+package com.tokioschool.alugo.meetnrun.controllers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.tokioschool.alugo.meetnrun.R;
 import com.tokioschool.alugo.meetnrun.model.Appointment;
 import com.tokioschool.alugo.meetnrun.model.Contracts;
-import com.tokioschool.alugo.meetnrun.model.Notification;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.Utils;
 
@@ -30,6 +28,46 @@ public class AppointmentController extends BaseController {
 
     public boolean confirmAppointment(int appointment_id){
         return changeAppointmentStatus(appointment_id, Appointment.Status.CONFIRMED);
+    }
+
+    public boolean requestModification(int appointment_id){
+        return changeAppointmentStatus(appointment_id, Appointment.Status.MODIFICATION_REQUESTED);
+    }
+
+    public boolean acceptModification(int appointment_id){
+        changeAppointmentStatus(appointment_id, Appointment.Status.CONFIRMED);
+
+        Appointment appointment = getAppointment(appointment_id);
+
+        SQLiteDatabase db = sqlHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Contracts.AppointmentEntry.STATUS, Appointment.Status.CANCELLED.ordinal());
+        int updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues,
+                String.format("%s = ? AND %s = ? AND %s = ?", Contracts.AppointmentEntry.PROFESSIONAL_ID, Contracts.AppointmentEntry.USER_ID, Contracts.AppointmentEntry.STATUS),
+                new String[]{String.valueOf(appointment.getProfessional_id()), String.valueOf(appointment.getUser_id()), String.valueOf(Appointment.Status.MODIFICATION_REQUESTED.ordinal())});
+
+        return updated == 1;
+    }
+
+    public boolean rejectModification(int appointment_id){
+        changeAppointmentStatus(appointment_id, Appointment.Status.CANCELLED);
+
+        Appointment appointment = getAppointment(appointment_id);
+
+        SQLiteDatabase db = sqlHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Contracts.AppointmentEntry.STATUS, Appointment.Status.CONFIRMED.ordinal());
+        int updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues,
+                String.format("%s = ? AND %s = ? AND %s = ?", Contracts.AppointmentEntry.PROFESSIONAL_ID, Contracts.AppointmentEntry.USER_ID, Contracts.AppointmentEntry.STATUS),
+                new String[]{String.valueOf(appointment.getProfessional_id()), String.valueOf(appointment.getUser_id()), String.valueOf(Appointment.Status.MODIFICATION_REQUESTED.ordinal())});
+
+        return updated == 1;
+    }
+
+    public boolean cancelAppointment(int appointment_id){
+        return changeAppointmentStatus(appointment_id, Appointment.Status.CANCELLED);
     }
 
     private boolean changeAppointmentStatus(int appointment_id, Appointment.Status status){
@@ -55,32 +93,19 @@ public class AppointmentController extends BaseController {
     }
 
 
-    public long requestAppointment(User professional, User pacient, int day, int hour){
-        long appointment_id = createAppointment(professional, pacient, day, hour, Appointment.Status.REQUESTED);
-        if (appointment_id == -1){
-            return -1;
-        }
-        
-        nc.createNotification(pacient.getId(), professional.getId(),
-                String.format(context.getString(R.string.description_notification_needsConfirmation), pacient.getName(), Utils.getDayByInt(day).name(), hour), Notification.Type.NEED_CONFIRMATION, (int) appointment_id);
-        return appointment_id;
+    public long requestAppointment(int professional, int pacient, int day, int hour){
+        return createAppointment(professional, pacient, day, hour, Appointment.Status.REQUESTED);
     }
 
-    public long createAppointment(User professional, User pacient, int day, int hour){
+    public long createAppointment(int professional, int pacient, int day, int hour){
 
-        long appointment_id = createAppointment(professional, pacient, day, hour, Appointment.Status.CONFIRMED);
-        if (appointment_id == -1){
-            return -1;
-        }
-        nc.createNotification(professional.getId(), pacient.getId(),
-                String.format(context.getString(R.string.description_notification_created), professional.getName(), Utils.getDayByInt(day).name(), hour), Notification.Type.CREATED, (int) appointment_id);
-        return  appointment_id;
+        return createAppointment(professional, pacient, day, hour, Appointment.Status.CONFIRMED);
     }
 
-    private long createAppointment(User professional, User pacient, int day, int hour, Appointment.Status status){
+    private long createAppointment(int professional, int pacient, int day, int hour, Appointment.Status status){
 
-        if (professional == null ||
-        pacient == null ||
+        if (professional == -1 ||
+        pacient == -1 ||
         day == -1 ||
         hour == -1 ||
         status == null){
@@ -92,8 +117,8 @@ public class AppointmentController extends BaseController {
         ContentValues values = new ContentValues();
 
         // Pares clave-valor
-        values.put(Contracts.AppointmentEntry.PROFESSIONAL_ID, professional.getId());
-        values.put(Contracts.AppointmentEntry.USER_ID, pacient.getId());
+        values.put(Contracts.AppointmentEntry.PROFESSIONAL_ID, professional);
+        values.put(Contracts.AppointmentEntry.USER_ID, pacient);
         values.put(Contracts.AppointmentEntry.DAY, day);
         values.put(Contracts.AppointmentEntry.HOUR, hour);
         values.put(Contracts.AppointmentEntry.STATUS, status.ordinal());
@@ -142,7 +167,7 @@ public class AppointmentController extends BaseController {
     }
 
 
-    public List<Appointment> getAppointments(User user){
+    public List<Appointment> getActiveAppointments(User user){
         List<Appointment> result = new ArrayList<>();
         Cursor cursor = null;
         if (user == null){
@@ -177,9 +202,10 @@ public class AppointmentController extends BaseController {
             int hour = cursor.getInt(houri);
             int status = cursor.getInt(statusi);
 
-            Appointment elem = new Appointment(id, professional_id, user_id, day, hour, Utils.getAppointmentStatusByInt(status));
-
-            result.add(elem);
+            if (status == Appointment.Status.CONFIRMED.ordinal()){
+                Appointment elem = new Appointment(id, professional_id, user_id, day, hour, Utils.getAppointmentStatusByInt(status));
+                result.add(elem);
+            }
         }
 
         cursor.close();
@@ -235,6 +261,25 @@ public class AppointmentController extends BaseController {
 
         db.close();
         return true;
+    }
+
+
+    public boolean modifyAppointment(int appointment_id, int day, int hour){
+
+        if (appointment_id == -1 || hour == -1 || day == -1){
+            return false;
+        }
+
+        SQLiteDatabase db = sqlHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Contracts.AppointmentEntry.DAY, day);
+        contentValues.put(Contracts.AppointmentEntry.HOUR, hour);
+        int updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues, String.format("%s = ?", Contracts.AppointmentEntry.ID), new String[]{String.valueOf(appointment_id)});
+
+        db.close();
+
+        return updated > 0;
     }
 
 

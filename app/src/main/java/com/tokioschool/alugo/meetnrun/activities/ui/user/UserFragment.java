@@ -1,9 +1,12 @@
 package com.tokioschool.alugo.meetnrun.activities.ui.user;
 
+import static com.tokioschool.alugo.meetnrun.util.Utils.CAMERA_CODE;
 import static com.tokioschool.alugo.meetnrun.util.Utils.isBitSet;
 import static com.tokioschool.alugo.meetnrun.util.Utils.setBit;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -30,8 +33,10 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.content.IntentCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -39,8 +44,8 @@ import com.tokioschool.alugo.meetnrun.BuildConfig;
 import com.tokioschool.alugo.meetnrun.R;
 import com.tokioschool.alugo.meetnrun.activities.HomeActivity;
 import com.tokioschool.alugo.meetnrun.activities.QRCodeActivity;
-import com.tokioschool.alugo.meetnrun.activities.controllers.AppointmentController;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.AppointmentController;
+import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.databinding.FragmentUserBinding;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.AlertHandler;
@@ -69,6 +74,8 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
     private AppointmentController ac;
     HomeActivity activity;
 
+    User currentUser;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         UserViewModel userViewModel =
@@ -79,10 +86,9 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         setHasOptionsMenu(true);
         activity = (HomeActivity) getActivity();
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //final TextView textView = binding.textNotifications;
-        //userViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        currentUser = activity.getCurrentUser();
 
-        uc = new UserController(getContext());
+        uc = activity.getUserController();
         ac = new AppointmentController(getContext());
         addUserLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -91,39 +97,41 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
                         return;
                     }
                 });
-        changePhotolauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(),
-                new ActivityResultCallback<Boolean>() {
-                    @Override
-                    public void onActivityResult(Boolean result) {
-                        if (!result){
-                            return;
-                        }
-                        Bitmap bitmap = null;
-                        try {
-                            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            return;
-                        }
-                        photoView.setImageBitmap(bitmap);
-                        try {
-                            uc.setUserPhoto(activity.currentUser, photoUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            return;
-                        }
-                    }
-                });
+        changePhotolauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
+            if (!result){
+                return;
+            }
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), photoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            photoView.setImageBitmap(bitmap);
+            try {
+                uc.setUserPhoto(activity.getCurrentUser(), photoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        });
 
         return root;
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
         menu.clear();
-        inflater.inflate(R.menu.top_tab_menu_home, menu);
+        if (activity.getCurrentUser().isProfessional()){
+            inflater.inflate(R.menu.top_tab_menu_home, menu);
+        }
     }
 
     @Override
@@ -151,9 +159,9 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         phoneTextField = (EditText) getView().findViewById(R.id.phoneField);
         emailTextField = (EditText) getView().findViewById(R.id.emailTextField);
 
-        surnameTextField.addTextChangedListener(new FormTextWatcher(R.id.surnameTextField, uc, activity.currentUser));
-        phoneTextField.addTextChangedListener(new FormTextWatcher(R.id.phoneField, uc, activity.currentUser));
-        emailTextField.addTextChangedListener(new FormTextWatcher(R.id.emailTextField, uc, activity.currentUser));
+        surnameTextField.addTextChangedListener(new FormTextWatcher(R.id.surnameTextField, uc, currentUser));
+        phoneTextField.addTextChangedListener(new FormTextWatcher(R.id.phoneField, uc, currentUser));
+        emailTextField.addTextChangedListener(new FormTextWatcher(R.id.emailTextField, uc, currentUser));
 
         photoView = (ImageView) getView().findViewById(R.id.userPhotoView);
         changePhotoButton = (Button) getView().findViewById(R.id.changePhotoButton);
@@ -167,37 +175,41 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
 
         HomeActivity activity =  (HomeActivity) getActivity();
 
-        User user = activity.currentUser;
+        userTextField.setText(currentUser.getName());
+        surnameTextField.setText(currentUser.getSurname());
+        phoneTextField.setText(currentUser.getPhone());
+        emailTextField.setText(currentUser.getEmail());
 
-        userTextField.setText(user.getName());
-        surnameTextField.setText(user.getSurname());
-        phoneTextField.setText(user.getPhone());
-        emailTextField.setText(user.getEmail());
-
-        if (user.getPhoto() != null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(user.getPhoto(), 0, user.getPhoto().length);
+        if (currentUser.getPhoto() != null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(currentUser.getPhoto(), 0, currentUser.getPhoto().length);
             photoView.setImageBitmap(Bitmap.createScaledBitmap(bmp, photoView.getWidth(), photoView.getHeight(), false));
         }
 
-        byte[] scheduleBytes = user.getSchedule();
+        if (currentUser.isProfessional()){
+            byte[] scheduleBytes = currentUser.getSchedule();
 
-        int lastDay = 0;
-        int hour = 0;
-        for (int i = 0; i < scheduleBytes.length; i++){
-            int dayId = i/3;
-            if (lastDay != dayId){
-                hour = 0;
-                lastDay = dayId;
-            }
-            for(int j = 0; j < 8; j++,hour++){
-                Utils.Day day = Utils.getDayByInt(dayId);
-                int boxId = getResources().getIdentifier(String.format("%s_%02d_box",day.name(),hour), "id", getActivity().getPackageName());
-                CheckBox box = (CheckBox) getView().findViewById(boxId);
-                if (isBitSet(scheduleBytes[i], 7-j)){
-                    box.setChecked(true);
+            int lastDay = 0;
+            int hour = 0;
+            for (int i = 0; i < scheduleBytes.length; i++){
+                int dayId = i/3;
+                if (lastDay != dayId){
+                    hour = 0;
+                    lastDay = dayId;
                 }
-                box.setOnCheckedChangeListener(this);
+                for(int j = 0; j < 8; j++,hour++){
+                    Utils.Day day = Utils.getDayByInt(dayId);
+                    int boxId = getResources().getIdentifier(String.format("%s_%02d_box",day.name(),hour), "id", getActivity().getPackageName());
+                    CheckBox box = (CheckBox) getView().findViewById(boxId);
+                    if (isBitSet(scheduleBytes[i], 7-j)){
+                        box.setChecked(true);
+                    }
+                    box.setOnCheckedChangeListener(this);
+                }
             }
+        } else {
+            getView().findViewById(R.id.scheduleTitle_TextView).setVisibility(View.GONE);
+            getView().findViewById(R.id.scheduleHeader_Layout).setVisibility(View.GONE);
+            getView().findViewById(R.id.scheduleTable_Layout).setVisibility(View.GONE);
         }
     }
 
@@ -215,11 +227,11 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         String[] elems = boxName.split("/")[1].split("_");
         Utils.Day day = Utils.Day.valueOf(elems[0]);
 
-        byte[] schedule = activity.currentUser.getSchedule();
+        byte[] schedule = currentUser.getSchedule();
 
         int hour = Integer.parseInt(elems[1]);
 
-        if (!isChecked && !ac.checkAppointment(activity.currentUser, day.ordinal(), hour)){
+        if (!isChecked && !ac.checkAppointment(currentUser, day.ordinal(), hour)){
             buttonView.setChecked(true);
             Toast toast = AlertHandler.getWarningHourWithExistingAppointment(getContext());
             toast.show();
@@ -234,7 +246,7 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
 
         schedule[day.ordinal() * 3 + bytei] = setBit(segmentByte, 7-biti, isChecked);
 
-        uc.setSchedule(activity.currentUser, schedule);
+        uc.setSchedule(currentUser, schedule);
     }
 
     private class FormTextWatcher implements TextWatcher {
@@ -287,30 +299,34 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         @Override
         public void onClick(View v) {
 
-            // Create an image file name
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "JPEG_" + timeStamp + "_";
-            File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File image = null;
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_CODE);
+            } else {
+                // Create an image file name
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String imageFileName = "JPEG_" + timeStamp + "_";
+                File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File image = null;
 
-            try {
-                image = File.createTempFile(
-                        imageFileName,  /* prefix */
-                        ".jpg",         /* suffix */
-                        storageDir      /* directory */
-                );
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
+                try {
+                    image = File.createTempFile(
+                            imageFileName,  /* prefix */
+                            ".jpg",         /* suffix */
+                            storageDir      /* directory */
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                if (image != null) {
+                    photoUri = FileProvider.getUriForFile(getContext(),
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            image);
+                }
+
+                changePhotolauncher.launch(photoUri);
             }
-
-            if (image != null) {
-                photoUri = FileProvider.getUriForFile(getContext(),
-                        BuildConfig.APPLICATION_ID + ".provider",
-                        image);
-            }
-
-            changePhotolauncher.launch(photoUri);
         }
     }
 

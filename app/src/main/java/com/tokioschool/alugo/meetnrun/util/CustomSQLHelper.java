@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.model.Contracts;
 
 public class CustomSQLHelper extends SQLiteOpenHelper {

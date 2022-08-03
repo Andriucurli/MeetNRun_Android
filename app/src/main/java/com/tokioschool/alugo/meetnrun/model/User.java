@@ -9,7 +9,6 @@ public class User {
     String email;
     byte[] photo = null;
     byte[] schedule;
-    byte[] availablePeriod;
 
     public void setSchedule(byte[] schedule) {
         this.schedule = schedule;
@@ -32,6 +31,10 @@ public class User {
     }
 
     public boolean isProfessional(){return professional_id == null;}
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
 
     Integer professional_id;
 

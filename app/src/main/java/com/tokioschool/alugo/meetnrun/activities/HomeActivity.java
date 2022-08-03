@@ -1,5 +1,7 @@
 package com.tokioschool.alugo.meetnrun.activities;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,37 +9,33 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.tokioschool.alugo.meetnrun.R;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.NotificationController;
 import com.tokioschool.alugo.meetnrun.databinding.ActivityHomeBinding;
-import com.tokioschool.alugo.meetnrun.model.User;
+import com.tokioschool.alugo.meetnrun.util.NotificationHandler;
 import com.tokioschool.alugo.meetnrun.util.Preferences;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private ActivityHomeBinding binding;
-    public User currentUser = null;
+    private BottomNavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        currentUser = new UserController(this).getUser(Preferences.get_user_id(this));
-
         if (currentUser == null){
             return;
         }
-
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = (BottomNavigationView) findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -51,6 +49,19 @@ public class HomeActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.notifications_48px);
         }
+
+        NotificationController nc = new NotificationController(this);
+        if (!nc.getActiveNotificationsByUser(currentUser).isEmpty() && Preferences.get_notifications_enabled(this)){
+            NotificationManager notificationManager = NotificationHandler.getNotificationManager(this);
+            Notification notification = NotificationHandler.generateSimpleNotification(this);
+            notificationManager.notify(1, notification);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navView.setSelectedItemId(R.id.nav_list);
     }
 
     public void resetActionBar()

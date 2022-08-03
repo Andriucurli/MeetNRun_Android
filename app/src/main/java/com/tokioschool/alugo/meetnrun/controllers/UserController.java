@@ -1,4 +1,4 @@
-package com.tokioschool.alugo.meetnrun.activities.controllers;
+package com.tokioschool.alugo.meetnrun.controllers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,17 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.google.zxing.common.StringUtils;
 import com.tokioschool.alugo.meetnrun.model.Contracts;
 import com.tokioschool.alugo.meetnrun.model.Contracts.UserEntry;
 import com.tokioschool.alugo.meetnrun.model.User;
-import com.tokioschool.alugo.meetnrun.util.CustomSQLHelper;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +24,7 @@ public class UserController extends BaseController {
             (byte) 0x00,(byte) 0xFF,(byte) 0xF8,
             (byte) 0x00,(byte) 0xFF,(byte) 0xF8,
             (byte) 0x00,(byte) 0xFF,(byte) 0xF8,
-            (byte) 0x00,(byte) 0xFF,(byte) 0xF8};
+            (byte) 0x00,(byte) 0x00,(byte) 0x00};
 
     public UserController(Context context) {
         super(context);
@@ -170,7 +166,7 @@ public class UserController extends BaseController {
         values.put(UserEntry.PHOTO, inputData);
 
         db.update(UserEntry.TABLE_NAME,values, UserEntry.ID + " LIKE ?", new String[]{String.valueOf(user.getId())});
-
+        user.setPhoto(inputData);
         db.close();
 
     }

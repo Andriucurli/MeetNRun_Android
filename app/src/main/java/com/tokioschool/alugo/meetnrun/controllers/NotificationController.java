@@ -1,11 +1,10 @@
-package com.tokioschool.alugo.meetnrun.activities.controllers;
+package com.tokioschool.alugo.meetnrun.controllers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.tokioschool.alugo.meetnrun.model.Contracts;
 import com.tokioschool.alugo.meetnrun.model.Contracts.NotificationEntry;
 import com.tokioschool.alugo.meetnrun.model.Notification;
 import com.tokioschool.alugo.meetnrun.model.User;

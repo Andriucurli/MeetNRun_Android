@@ -3,25 +3,33 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.165" />
+        <entry key="app/src/main/res/drawable/settings_48px.xml" value="0.2745" />
+        <entry key="app/src/main/res/drawable/whatsapp_48px.xml" value="0.2745" />
+        <entry key="app/src/main/res/layout/activity_about_us.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_add_user.xml" value="0.20643363728470113" />
+        <entry key="app/src/main/res/layout/activity_appointment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.5033020019531249" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23007246376811594" />
         <entry key="app/src/main/res/layout/activity_notifications.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_qrcode.xml" value="0.20643363728470113" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_sign_up_pacient.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/alert_spinners_view.xml" value="0.1" />
         <entry key="app/src/main/res/layout/appointment_list_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/calendar_cell.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/layout/fragment_add_appointment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.2727000139761662" />
-        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.1" />
         <entry key="app/src/main/res/layout/notification_list_item.xml" value="0.18070652173913043" />
         <entry key="app/src/main/res/layout/simple_spinner_item.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2171875" />
         <entry key="app/src/main/res/menu/top_tab_menu.xml" value="0.38981481481481484" />
         <entry key="app/src/main/res/menu/top_tab_menu_home.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/top_tab_menu_list.xml" value="0.23125" />
         <entry key="app/src/main/res/xml/provider_paths.xml" value="0.1" />
       </map>
     </option>

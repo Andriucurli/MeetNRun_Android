@@ -1,8 +1,8 @@
 package com.tokioschool.alugo.meetnrun.activities.ui.addAppointment;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +19,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.tokioschool.alugo.meetnrun.R;
 import com.tokioschool.alugo.meetnrun.activities.HomeActivity;
-import com.tokioschool.alugo.meetnrun.activities.controllers.AppointmentController;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.AppointmentController;
+import com.tokioschool.alugo.meetnrun.controllers.NotificationController;
+import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.adapters.CustomSpinnerAdapter;
 import com.tokioschool.alugo.meetnrun.databinding.FragmentAddAppointmentBinding;
+import com.tokioschool.alugo.meetnrun.model.Notification;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.AlertHandler;
 import com.tokioschool.alugo.meetnrun.util.Utils;
@@ -35,9 +37,7 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
 
     private FragmentAddAppointmentBinding binding;
     private HomeActivity mainActivity;
-    private UserController uc;
     private AppointmentController ac;
-    private User user;
 
     private TextView anythingTextView;
     private Spinner anythingSpinner;
@@ -53,18 +53,16 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
 
     private void loadUIelems(){
 
-        uc = new UserController(getContext());
         ac = new AppointmentController(getContext());
         mainActivity = (HomeActivity) getActivity();
         mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mainActivity.setTitle("");
-        user = mainActivity.currentUser;
 
         anythingTextView = (TextView) getView().findViewById(R.id.anythingTextField);
         anythingSpinner = (Spinner) getView().findViewById(R.id.anythingSpinner);
         daySpinner = (Spinner) getView().findViewById(R.id.daySpinner);
         hourSpinner = (Spinner) getView().findViewById(R.id.hourSpinner);
-        addAppointmentButton = (Button) getView().findViewById(R.id.addAppointmentButton);
+        addAppointmentButton = (Button) getView().findViewById(R.id.requestCreateButton);
 
         anythingSpinner.setOnItemSelectedListener(this);
         daySpinner.setOnItemSelectedListener(this);
@@ -75,52 +73,20 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
         daySpinner.setEnabled(false);
         hourSpinner.setEnabled(false);
 
-        List<String> days = new ArrayList<String>();
-        for (Utils.Day d: Utils.Day.values()) {
-            days.add(d.name());
-        }
+        daySpinner.setAdapter(CustomSpinnerAdapter.getDaySpinnerAdapter(getContext()));
 
-        CustomSpinnerAdapter dayAdapter = new CustomSpinnerAdapter(getContext(), days);
-        daySpinner.setAdapter(dayAdapter);
-
-    }
-
-    private void loadHourSpinner(int day){
-        List<String> hours = new ArrayList<>();
-        byte[] schedule;
-        if (user.isProfessional()){
-            schedule = user.getSchedule();
-        } else {
-            User professional = uc.getUser(user.getProfessional_id());
-            schedule = professional.getSchedule();
-        }
-
-        //los dias estan divididos en 3 bytes. 3 bytes = 3*8 bits = 24 horas
-
-        for (int i = 0, hour = 0; i < 3; i++){
-            byte bytei = schedule[day*3+i];
-
-            for (int j = 7; j >= 0; j--,hour++){
-                if (Utils.isBitSet(bytei, j) && ac.checkAppointment(user, day, hour)){
-                    hours.add(String.format("%02d:00", hour));
-                }
-            }
-        }
-
-        CustomSpinnerAdapter hourAdapter = new CustomSpinnerAdapter(getContext(), hours);
-        hourSpinner.setEnabled(true);
-        hourSpinner.setAdapter(hourAdapter);
     }
 
     private void initForm(){
 
-        if (user.isProfessional()){
+        if (mainActivity.getCurrentUser().isProfessional()){
             anythingTextView.setText(R.string.pacient);
-            pacients = uc.getPacients(user);
-            List<String> names = new ArrayList<>();
+            addAppointmentButton.setText(R.string.create_appointment);
+            pacients = mainActivity.getUserController().getPacients(mainActivity.getCurrentUser());
+            List<Pair<Integer, String>> names = new ArrayList<>();
             for (User pacient:
                     pacients) {
-                names.add(pacient.getName());
+                names.add(new Pair<>(pacient.getId(), pacient.getSurname()));
             }
 
             CustomSpinnerAdapter pacientAdapter = new CustomSpinnerAdapter(getContext(), names);
@@ -129,6 +95,7 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
             anythingSpinner.setAdapter(pacientAdapter);
 
         } else {
+            addAppointmentButton.setText(R.string.request_appointment);
             anythingTextView.setVisibility(View.INVISIBLE);
             anythingSpinner.setVisibility(View.INVISIBLE);
 
@@ -182,7 +149,9 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
                 } else {
                     hourSpinner.setEnabled(true);
                     day = position - 1;
-                    loadHourSpinner(position-1);
+                    CustomSpinnerAdapter hourAdapter = CustomSpinnerAdapter.getHourSpinnerAdapter(getContext(), mainActivity.getCurrentUser(), day);
+                    hourSpinner.setEnabled(true);
+                    hourSpinner.setAdapter(hourAdapter);
                 }
                 break;
             default:
@@ -190,8 +159,8 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
                     return;
                 } else {
 
-                    String hourStr = (String) hourSpinner.getAdapter().getItem(position-1);
-                    hour = Integer.parseInt(hourStr.split(":")[0]);
+                    Pair<Integer, String> hourPair = (Pair<Integer, String>) hourSpinner.getAdapter().getItem(position - 1);
+                    hour = hourPair.first;
                 }
                 break;
         }
@@ -224,28 +193,45 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
         private final Context context;
         private final AppointmentController ac;
         private final UserController uc;
+        private final NotificationController nc;
 
         public AddAppointmentListener(Context context) {
             this.context = context;
             this.ac = new AppointmentController(context);
             this.uc = new UserController(context);
+            this.nc = new NotificationController(context);
         }
 
         @Override
         public void onClick(View v) {
 
             if (hour == null || day == null ||
-                    (user.isProfessional() && pacientPos == null )){
+                    (mainActivity.getCurrentUser().isProfessional() && pacientPos == null )){
                 Toast toast = AlertHandler.getWarningEmptyFields(getContext());
                 toast.show();
                 return;
             } else {
-                if (user.isProfessional()){
-                    ac.createAppointment(user, pacients.get(pacientPos), day, hour);
+                if (mainActivity.getCurrentUser().isProfessional()){
+                    User pacient = pacients.get(pacientPos);
+                    long appointment_id = ac.createAppointment(mainActivity.getCurrentUser().getId(), pacient.getId(), day, hour);
+
+                    if (appointment_id == -1){
+                        return;
+                    }
+                    Utils.Day dayAux = Utils.getDayByInt(day);
+                    int dayNameId = context.getResources().getIdentifier(dayAux.name(), "string", context.getPackageName());
+                    nc.createNotification(mainActivity.getCurrentUser().getId(), pacient.getId(),
+                            String.format(context.getString(R.string.description_notification_created), mainActivity.getCurrentUser().getName(), context.getString(dayNameId) , hour), Notification.Type.CREATED, (int) appointment_id);
 
                 } else {
-                    User professional = uc.getUser(user.getProfessional_id());
-                    ac.requestAppointment(professional, user, day, hour);
+                    long appointment_id = ac.requestAppointment(mainActivity.getCurrentUser().getProfessional_id(), mainActivity.getCurrentUser().getId(), day, hour);
+                    if (appointment_id == -1){
+                        return;
+                    }
+                    Utils.Day dayAux = Utils.getDayByInt(day);
+                    int dayNameId = context.getResources().getIdentifier(dayAux.name(), "string", context.getPackageName());
+                    nc.createNotification(mainActivity.getCurrentUser().getId(), mainActivity.getCurrentUser().getProfessional_id(),
+                            String.format(context.getString(R.string.description_notification_needsConfirmation), mainActivity.getCurrentUser().getName(), context.getString(dayNameId), hour), Notification.Type.NEED_CONFIRMATION, (int) appointment_id);
                 }
                 Toast toast = AlertHandler.getInfoAppointmentCreated(getContext());
                 toast.show();

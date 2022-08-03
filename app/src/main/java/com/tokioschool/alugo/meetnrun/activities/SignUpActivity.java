@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.tokioschool.alugo.meetnrun.R;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.AlertHandler;
 

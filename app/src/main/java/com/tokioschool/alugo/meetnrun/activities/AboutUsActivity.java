@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.tokioschool.alugo.meetnrun.R;
 
-public class AddUserActivity extends AppCompatActivity {
+public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_user);
+        setContentView(R.layout.activity_about_us);
     }
 }

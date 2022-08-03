@@ -9,6 +9,9 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -20,19 +23,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetNRun"
         tools:targetApi="31">
-        <service
-            android:name=".services.TestService"
-            android:enabled="true"
-            android:exported="true"></service>
-
+        <activity
+            android:name=".activities.AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.QRCodeActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SignUpPacientActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.AddUserActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SignUpActivity"

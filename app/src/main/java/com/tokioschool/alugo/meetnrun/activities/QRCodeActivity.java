@@ -1,8 +1,5 @@
 package com.tokioschool.alugo.meetnrun.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,30 +13,19 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.tokioschool.alugo.meetnrun.R;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
-import com.tokioschool.alugo.meetnrun.model.User;
-import com.tokioschool.alugo.meetnrun.util.Preferences;
 
 import java.util.UUID;
 
-public class QRCodeActivity extends AppCompatActivity implements View.OnClickListener {
+public class QRCodeActivity extends BaseActivity implements View.OnClickListener {
 
     private Button invitePatientButton;
     private EditText pacientSurname;
     private EditText pacientEmail;
-    private UserController uc;
-    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-        uc = new UserController(this);
-        currentUser = new UserController(this).getUser(Preferences.get_user_id(this));
-
-        if (currentUser == null){
-            return;
-        }
         UUID code = UUID.randomUUID();
 
         QRCodeWriter writer = new QRCodeWriter();
@@ -73,7 +59,7 @@ public class QRCodeActivity extends AppCompatActivity implements View.OnClickLis
         pacientEmail.getText().toString().compareTo("") == 0){
 
         } else {
-            uc.createPacient(pacientSurname.getText().toString(), pacientEmail.getText().toString(), currentUser.getId());
+            userController.createPacient(pacientSurname.getText().toString(), pacientEmail.getText().toString(), currentUser.getId());
             finish();
         }
 

@@ -1,8 +1,6 @@
 package com.tokioschool.alugo.meetnrun.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tokioschool.alugo.meetnrun.R;
-import com.tokioschool.alugo.meetnrun.activities.controllers.AppointmentController;
-import com.tokioschool.alugo.meetnrun.activities.controllers.NotificationController;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.AppointmentController;
+import com.tokioschool.alugo.meetnrun.controllers.NotificationController;
+import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.model.Appointment;
 import com.tokioschool.alugo.meetnrun.model.Notification;
 import com.tokioschool.alugo.meetnrun.model.User;
@@ -27,6 +25,10 @@ public class NotificationViewAdapter extends RecyclerView.Adapter<NotificationVi
 
     public void setData(List<Notification> data) {
         this.data = data;
+    }
+
+    public List<Notification> getData() {
+        return data;
     }
 
     private List<Notification> data;
@@ -89,7 +91,7 @@ public class NotificationViewAdapter extends RecyclerView.Adapter<NotificationVi
 
         public void loadNotification(Notification notification, User sender){
             this.notification = notification;
-            this.sender.setText(sender.getName());
+            this.sender.setText(sender.getSurname());
             this.message.setText(notification.getMessage());
 
             if (notification.getType() != Notification.Type.NEED_CONFIRMATION &&
@@ -109,20 +111,46 @@ public class NotificationViewAdapter extends RecyclerView.Adapter<NotificationVi
                         return;
                         //TODO control de errores
                     }
-                    if (ac.confirmAppointment(appointment_id)){
-                        Appointment appointment = ac.getAppointment(appointment_id);
-                        nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), context.getString(R.string.notification_text_appointment_confirmed), Notification.Type.CONFIRMED, appointment_id);
+
+                    switch (notification.getType()){
+                        case NEED_CONFIRMATION:
+                            if (ac.confirmAppointment(appointment_id)){
+                                Appointment appointment = ac.getAppointment(appointment_id);
+                                nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), context.getString(R.string.notification_text_appointment_confirmed), Notification.Type.CONFIRMED, appointment_id);
+                            }
+                            break;
+                        case NEED_MODIFICATION:
+                            if (ac.acceptModification(appointment_id)){
+                                Appointment appointment = ac.getAppointment(appointment_id);
+                                nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(),
+                                        context.getString(R.string.notification_text_modification_accepted), Notification.Type.MODIFIED, appointment_id);
+                            }
+                            break;
+                        default:
+                            return;
                     }
+
+
                     break;
                 case R.id.rejectNotificationButton:
-
                     if (appointment_id == null){
                         return;
-                        //TODO control de errores
                     }
-                    if (ac.rejectAppointment(appointment_id)){
-                        Appointment appointment = ac.getAppointment(appointment_id);
-                        nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), "Appointment Cancelled", Notification.Type.CANCELLED, appointment_id);
+                    switch (notification.getType()){
+                        case NEED_CONFIRMATION:
+                            if (ac.rejectAppointment(appointment_id)){
+                                Appointment appointment = ac.getAppointment(appointment_id);
+                                nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), context.getString(R.string.notification_text_appointment_cancelled), Notification.Type.CANCELLED, appointment_id);
+                            }
+                            break;
+                        case NEED_MODIFICATION:
+                            if (ac.rejectModification(appointment_id)){
+                                Appointment appointment = ac.getAppointment(appointment_id);
+                                nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), context.getString(R.string.notification_text_modification_rejected), Notification.Type.CANCELLED, appointment_id);
+                            }
+                            break;
+                        default:
+                            return;
                     }
                     break;
             }

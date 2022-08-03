@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@color/white"
     android:clipToPadding="true"
     android:paddingLeft="5dp"
@@ -16,6 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
@@ -46,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="@string/name"
+                android:text="@string/username"
                 android:textSize="16sp" />
 
             <EditText
@@ -54,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="@string/name"
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
@@ -81,7 +84,8 @@
                 android:hint="@string/surname"
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:textColorHint="#757575" />
         </LinearLayout>
 
         <LinearLayout
@@ -134,13 +138,14 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/scheduleTitle_TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/availability_schedule"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
         <LinearLayout
+            android:id="@+id/scheduleHeader_Layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -210,7 +215,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/availabilityScheduleLayout"
+            android:id="@+id/scheduleTable_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -245,7 +250,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_00_box"
+                            android:id="@+id/mo_00_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -257,7 +262,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_00_box"
+                            android:id="@+id/we_00_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -269,19 +274,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_00_box"
+                            android:id="@+id/fr_00_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_00_box"
+                            android:id="@+id/sa_00_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_00_box"
+                            android:id="@+id/su_00_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -302,7 +307,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_01_box"
+                            android:id="@+id/mo_01_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -314,7 +319,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_01_box"
+                            android:id="@+id/we_01_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
@@ -327,19 +332,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_01_box"
+                            android:id="@+id/fr_01_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_01_box"
+                            android:id="@+id/sa_01_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_01_box"
+                            android:id="@+id/su_01_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -360,7 +365,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_02_box"
+                            android:id="@+id/mo_02_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -372,7 +377,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_02_box"
+                            android:id="@+id/we_02_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -384,19 +389,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_02_box"
+                            android:id="@+id/fr_02_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_02_box"
+                            android:id="@+id/sa_02_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_02_box"
+                            android:id="@+id/su_02_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -417,7 +422,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_03_box"
+                            android:id="@+id/mo_03_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -429,7 +434,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_03_box"
+                            android:id="@+id/we_03_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -441,19 +446,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_03_box"
+                            android:id="@+id/fr_03_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_03_box"
+                            android:id="@+id/sa_03_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_03_box"
+                            android:id="@+id/su_03_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -474,7 +479,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_04_box"
+                            android:id="@+id/mo_04_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -486,7 +491,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_04_box"
+                            android:id="@+id/we_04_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -498,19 +503,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_04_box"
+                            android:id="@+id/fr_04_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_04_box"
+                            android:id="@+id/sa_04_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_04_box"
+                            android:id="@+id/su_04_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -531,7 +536,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_05_box"
+                            android:id="@+id/mo_05_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -543,7 +548,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_05_box"
+                            android:id="@+id/we_05_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -555,19 +560,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_05_box"
+                            android:id="@+id/fr_05_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_05_box"
+                            android:id="@+id/sa_05_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_05_box"
+                            android:id="@+id/su_05_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -588,7 +593,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_06_box"
+                            android:id="@+id/mo_06_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -600,7 +605,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_06_box"
+                            android:id="@+id/we_06_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -612,19 +617,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_06_box"
+                            android:id="@+id/fr_06_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_06_box"
+                            android:id="@+id/sa_06_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_06_box"
+                            android:id="@+id/su_06_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -645,7 +650,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_07_box"
+                            android:id="@+id/mo_07_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -657,7 +662,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_07_box"
+                            android:id="@+id/we_07_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -669,19 +674,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_07_box"
+                            android:id="@+id/fr_07_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_07_box"
+                            android:id="@+id/sa_07_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_07_box"
+                            android:id="@+id/su_07_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -702,7 +707,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_08_box"
+                            android:id="@+id/mo_08_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -714,7 +719,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_08_box"
+                            android:id="@+id/we_08_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -726,19 +731,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_08_box"
+                            android:id="@+id/fr_08_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_08_box"
+                            android:id="@+id/sa_08_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_08_box"
+                            android:id="@+id/su_08_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -759,7 +764,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_09_box"
+                            android:id="@+id/mo_09_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -771,7 +776,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_09_box"
+                            android:id="@+id/we_09_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -783,19 +788,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_09_box"
+                            android:id="@+id/fr_09_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_09_box"
+                            android:id="@+id/sa_09_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_09_box"
+                            android:id="@+id/su_09_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -817,7 +822,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_10_box"
+                            android:id="@+id/mo_10_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -829,7 +834,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_10_box"
+                            android:id="@+id/we_10_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -841,19 +846,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_10_box"
+                            android:id="@+id/fr_10_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_10_box"
+                            android:id="@+id/sa_10_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_10_box"
+                            android:id="@+id/su_10_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -875,7 +880,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_11_box"
+                            android:id="@+id/mo_11_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -887,7 +892,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_11_box"
+                            android:id="@+id/we_11_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -899,19 +904,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_11_box"
+                            android:id="@+id/fr_11_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_11_box"
+                            android:id="@+id/sa_11_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_11_box"
+                            android:id="@+id/su_11_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -933,7 +938,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_12_box"
+                            android:id="@+id/mo_12_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -945,7 +950,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_12_box"
+                            android:id="@+id/we_12_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -957,19 +962,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_12_box"
+                            android:id="@+id/fr_12_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_12_box"
+                            android:id="@+id/sa_12_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_12_box"
+                            android:id="@+id/su_12_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -991,7 +996,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_13_box"
+                            android:id="@+id/mo_13_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1003,7 +1008,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_13_box"
+                            android:id="@+id/we_13_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1015,19 +1020,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_13_box"
+                            android:id="@+id/fr_13_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_13_box"
+                            android:id="@+id/sa_13_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_13_box"
+                            android:id="@+id/su_13_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1049,7 +1054,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_14_box"
+                            android:id="@+id/mo_14_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1061,7 +1066,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_14_box"
+                            android:id="@+id/we_14_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1073,19 +1078,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_14_box"
+                            android:id="@+id/fr_14_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_14_box"
+                            android:id="@+id/sa_14_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_14_box"
+                            android:id="@+id/su_14_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1107,7 +1112,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_15_box"
+                            android:id="@+id/mo_15_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1119,7 +1124,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_15_box"
+                            android:id="@+id/we_15_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1131,19 +1136,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_15_box"
+                            android:id="@+id/fr_15_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_15_box"
+                            android:id="@+id/sa_15_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_15_box"
+                            android:id="@+id/su_15_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1165,7 +1170,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_16_box"
+                            android:id="@+id/mo_16_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1177,7 +1182,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_16_box"
+                            android:id="@+id/we_16_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1189,19 +1194,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_16_box"
+                            android:id="@+id/fr_16_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_16_box"
+                            android:id="@+id/sa_16_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_16_box"
+                            android:id="@+id/su_16_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1223,7 +1228,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_17_box"
+                            android:id="@+id/mo_17_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1235,7 +1240,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_17_box"
+                            android:id="@+id/we_17_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1247,19 +1252,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_17_box"
+                            android:id="@+id/fr_17_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_17_box"
+                            android:id="@+id/sa_17_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_17_box"
+                            android:id="@+id/su_17_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1281,7 +1286,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_18_box"
+                            android:id="@+id/mo_18_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1293,7 +1298,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_18_box"
+                            android:id="@+id/we_18_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1305,19 +1310,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_18_box"
+                            android:id="@+id/fr_18_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_18_box"
+                            android:id="@+id/sa_18_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_18_box"
+                            android:id="@+id/su_18_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1339,7 +1344,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_19_box"
+                            android:id="@+id/mo_19_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1351,7 +1356,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_19_box"
+                            android:id="@+id/we_19_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1363,19 +1368,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_19_box"
+                            android:id="@+id/fr_19_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_19_box"
+                            android:id="@+id/sa_19_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_19_box"
+                            android:id="@+id/su_19_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1397,7 +1402,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_20_box"
+                            android:id="@+id/mo_20_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1409,7 +1414,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_20_box"
+                            android:id="@+id/we_20_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1421,19 +1426,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_20_box"
+                            android:id="@+id/fr_20_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_20_box"
+                            android:id="@+id/sa_20_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_20_box"
+                            android:id="@+id/su_20_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1455,7 +1460,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_21_box"
+                            android:id="@+id/mo_21_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1467,7 +1472,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_21_box"
+                            android:id="@+id/we_21_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1479,19 +1484,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_21_box"
+                            android:id="@+id/fr_21_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_21_box"
+                            android:id="@+id/sa_21_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_21_box"
+                            android:id="@+id/su_21_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1513,7 +1518,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_22_box"
+                            android:id="@+id/mo_22_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1525,7 +1530,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_22_box"
+                            android:id="@+id/we_22_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1537,19 +1542,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_22_box"
+                            android:id="@+id/fr_22_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_22_box"
+                            android:id="@+id/sa_22_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_22_box"
+                            android:id="@+id/su_22_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1571,7 +1576,7 @@
                             android:textSize="16sp" />
 
                         <CheckBox
-                            android:id="@+id/mon_23_box"
+                            android:id="@+id/mo_23_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1583,7 +1588,7 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/wed_23_box"
+                            android:id="@+id/we_23_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
@@ -1595,19 +1600,19 @@
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/fri_23_box"
+                            android:id="@+id/fr_23_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sat_23_box"
+                            android:id="@+id/sa_23_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />
 
                         <CheckBox
-                            android:id="@+id/sun_23_box"
+                            android:id="@+id/su_23_box"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="2" />

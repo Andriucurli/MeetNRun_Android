@@ -1,4 +1,4 @@
-package com.tokioschool.alugo.meetnrun.activities.controllers;
+package com.tokioschool.alugo.meetnrun.controllers;
 
 import android.content.Context;
 
@@ -13,4 +13,6 @@ public abstract class BaseController{
         this.sqlHelper = new CustomSQLHelper(context);
         this.context = context;
     }
+
+
 }

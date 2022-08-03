@@ -7,6 +7,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.tokioschool.alugo.meetnrun.R;
+import com.tokioschool.alugo.meetnrun.model.Appointment;
+import com.tokioschool.alugo.meetnrun.model.User;
 
 public class AlertHandler {
 
@@ -59,6 +61,11 @@ public class AlertHandler {
         return builder.create();
     }
 
+    public static AlertDialog getConfirmationCancelAppointment(Context context, Appointment appointment, User currentUser){
+
+        return builder.create();
+    }
+
     public static Toast getInfoUserCreated(Context context){
         return Toast.makeText(context, R.string.message_info_userCreated, Toast.LENGTH_LONG);
     }
@@ -73,5 +80,4 @@ public class AlertHandler {
     public static Toast getInfoAppointmentCreated(Context context){
         return Toast.makeText(context, R.string.message_info_appointmentCreated, Toast.LENGTH_LONG);
     }
-
 }

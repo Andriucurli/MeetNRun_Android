@@ -16,10 +16,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.tokioschool.alugo.meetnrun.R;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.AlertHandler;
 import com.tokioschool.alugo.meetnrun.util.CustomSQLHelper;
+import com.tokioschool.alugo.meetnrun.util.NotificationHandler;
 import com.tokioschool.alugo.meetnrun.util.Preferences;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,8 +33,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ActivityResultLauncher<Intent> signUpResultLauncher;
     private Button signUpPacient;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -59,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
+        NotificationHandler.generateChannel(this);
     }
 
     private void showToastInfoUserCreated(){

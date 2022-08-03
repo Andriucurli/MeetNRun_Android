@@ -1,40 +1,37 @@
 package com.tokioschool.alugo.meetnrun.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.tokioschool.alugo.meetnrun.R;
-import com.tokioschool.alugo.meetnrun.activities.controllers.NotificationController;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.controllers.NotificationController;
 import com.tokioschool.alugo.meetnrun.adapters.NotificationViewAdapter;
 import com.tokioschool.alugo.meetnrun.model.Notification;
-import com.tokioschool.alugo.meetnrun.model.User;
-import com.tokioschool.alugo.meetnrun.util.Preferences;
 
 import java.util.List;
 
-public class NotificationsActivity extends AppCompatActivity {
+public class NotificationsActivity extends BaseActivity {
 
     RecyclerView notificationsRV;
     NotificationViewAdapter adapter;
     NotificationController nc;
-    User currentUser;
+    private TextView noNotificationsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
 
-        currentUser = new UserController(this).getUser(Preferences.get_user_id(this));
-
         if (currentUser == null){
             return;
         }
         nc = new NotificationController(this);
 
+        noNotificationsTextView = (TextView) findViewById(R.id.no_notifications_textView);
         notificationsRV = (RecyclerView) findViewById(R.id.notificationsRecyclerView);
         notificationsRV.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -43,7 +40,13 @@ public class NotificationsActivity extends AppCompatActivity {
         List<Notification> notifications = nc.getActiveNotificationsByUser(currentUser);
 
         adapter = new NotificationViewAdapter(this);
-
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                loadUI(adapter.getData());
+            }
+        });
         notificationsRV.setAdapter(adapter);
     }
 
@@ -54,5 +57,15 @@ public class NotificationsActivity extends AppCompatActivity {
         List<Notification> data = nc.getActiveNotificationsByUser(currentUser);
         adapter.setData(data);
         adapter.notifyDataSetChanged();
+    }
+
+    private void loadUI(List<Notification> data){
+        if (data.isEmpty()){
+            noNotificationsTextView.setVisibility(View.VISIBLE);
+            notificationsRV.setVisibility(View.GONE);
+        } else {
+            noNotificationsTextView.setVisibility(View.GONE);
+            notificationsRV.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.tokioschool.alugo.meetnrun.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tokioschool.alugo.meetnrun.R;
-import com.tokioschool.alugo.meetnrun.activities.controllers.UserController;
+import com.tokioschool.alugo.meetnrun.activities.AppointmentActivity;
+import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.model.Appointment;
-import com.tokioschool.alugo.meetnrun.model.Notification;
+import com.tokioschool.alugo.meetnrun.model.Contracts;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.Utils;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +53,14 @@ public class AppointmentViewAdapter extends RecyclerView.Adapter<AppointmentView
         Appointment elem = data.get(position);
 
         holder.loadAppointment(elem);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AppointmentActivity.class);
+                intent.putExtra(Contracts.AppointmentEntry.ID, elem.getAppointment_id());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -62,27 +70,30 @@ public class AppointmentViewAdapter extends RecyclerView.Adapter<AppointmentView
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder{
 
-        TextView hour;
-        TextView day;
-        TextView username;
+        TextView hourTextView;
+        TextView dayTextView;
+        TextView nameTextView;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
-            hour = (TextView) itemView.findViewById(R.id.appointmentSubtitleTextView);
-            day = (TextView) itemView.findViewById(R.id.appointmentTitleTextView);
-            username = (TextView) itemView.findViewById(R.id.appointmentDetailTextView);
+            dayTextView = (TextView) itemView.findViewById(R.id.appointmentSubtitleTextView);
+            nameTextView = (TextView) itemView.findViewById(R.id.appointmentTitleTextView);
+            hourTextView = (TextView) itemView.findViewById(R.id.appointmentDetailTextView);
         }
 
         public void loadAppointment(Appointment appointment){
 
-            day.setText(Utils.getDayByInt(appointment.getDay()).name());
-            hour.setText(String.format("%02d:00", appointment.getHour()));
+
+            Utils.Day day = Utils.getDayByInt(appointment.getDay());
+            int dayNameId = context.getResources().getIdentifier(day.name(), "string", context.getPackageName());
+            dayTextView.setText(dayNameId);
+            hourTextView.setText(String.format("%02d:00", appointment.getHour()));
             if (user.isProfessional()){
                 User pacient = uc.getUser(appointment.getUser_id());
-                username.setText(pacient.getName());
+                nameTextView.setText(pacient.getSurname());
             } else {
                 User professional = uc.getUser(appointment.getProfessional_id());
-                username.setText(professional.getName());
+                nameTextView.setText(professional.getSurname());
             }
 
         }
