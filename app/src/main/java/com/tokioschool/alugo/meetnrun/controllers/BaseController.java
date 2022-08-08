@@ -8,6 +8,7 @@ public abstract class BaseController{
 
     protected CustomSQLHelper sqlHelper;
     protected Context context;
+    protected static String COMPARATOR_STRING = "%s = ?";
 
     public BaseController(Context context) {
         this.sqlHelper = new CustomSQLHelper(context);

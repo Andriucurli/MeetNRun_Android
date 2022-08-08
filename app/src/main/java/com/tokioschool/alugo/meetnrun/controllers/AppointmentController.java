@@ -35,6 +35,7 @@ public class AppointmentController extends BaseController {
     }
 
     public boolean acceptModification(int appointment_id){
+        int updated;
         changeAppointmentStatus(appointment_id, Appointment.Status.CONFIRMED);
 
         Appointment appointment = getAppointment(appointment_id);
@@ -43,14 +44,23 @@ public class AppointmentController extends BaseController {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Contracts.AppointmentEntry.STATUS, Appointment.Status.CANCELLED.ordinal());
-        int updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues,
-                String.format("%s = ? AND %s = ? AND %s = ?", Contracts.AppointmentEntry.PROFESSIONAL_ID, Contracts.AppointmentEntry.USER_ID, Contracts.AppointmentEntry.STATUS),
-                new String[]{String.valueOf(appointment.getProfessional_id()), String.valueOf(appointment.getUser_id()), String.valueOf(Appointment.Status.MODIFICATION_REQUESTED.ordinal())});
 
+        try {
+            updated = db.update(Contracts.AppointmentEntry.TABLE_NAME,
+                    contentValues,
+                    String.format("%s = ? AND %s = ? AND %s = ?", Contracts.AppointmentEntry.PROFESSIONAL_ID, Contracts.AppointmentEntry.USER_ID, Contracts.AppointmentEntry.STATUS),
+                    new String[]{String.valueOf(appointment.getProfessional_id()), String.valueOf(appointment.getUser_id()), String.valueOf(Appointment.Status.MODIFICATION_REQUESTED.ordinal())});
+        } catch (Exception e){
+            e.printStackTrace();
+            updated = 0;
+        } finally {
+            db.close();
+        }
         return updated == 1;
     }
 
     public boolean rejectModification(int appointment_id){
+        int updated = 0;
         changeAppointmentStatus(appointment_id, Appointment.Status.CANCELLED);
 
         Appointment appointment = getAppointment(appointment_id);
@@ -59,10 +69,16 @@ public class AppointmentController extends BaseController {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Contracts.AppointmentEntry.STATUS, Appointment.Status.CONFIRMED.ordinal());
-        int updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues,
-                String.format("%s = ? AND %s = ? AND %s = ?", Contracts.AppointmentEntry.PROFESSIONAL_ID, Contracts.AppointmentEntry.USER_ID, Contracts.AppointmentEntry.STATUS),
-                new String[]{String.valueOf(appointment.getProfessional_id()), String.valueOf(appointment.getUser_id()), String.valueOf(Appointment.Status.MODIFICATION_REQUESTED.ordinal())});
-
+        try {
+            updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues,
+                    String.format("%s = ? AND %s = ? AND %s = ?", Contracts.AppointmentEntry.PROFESSIONAL_ID, Contracts.AppointmentEntry.USER_ID, Contracts.AppointmentEntry.STATUS),
+                    new String[]{String.valueOf(appointment.getProfessional_id()), String.valueOf(appointment.getUser_id()), String.valueOf(Appointment.Status.MODIFICATION_REQUESTED.ordinal())});
+        } catch (Exception e){
+            e.printStackTrace();
+            updated = 0;
+        } finally {
+            db.close();
+        }
         return updated == 1;
     }
 
@@ -75,21 +91,22 @@ public class AppointmentController extends BaseController {
         if (appointment_id == -1 || status == null){
             return false;
         }
-
+        int updated;
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Contracts.AppointmentEntry.STATUS, status.ordinal());
-        int updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues,
-                String.format("%s = ?", Contracts.AppointmentEntry.ID), new String[]{String.valueOf(appointment_id)});
-
-        if (updated == 0){
+        try {
+            updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues,
+                    String.format(COMPARATOR_STRING, Contracts.AppointmentEntry.ID), new String[]{String.valueOf(appointment_id)});
+        } catch (Exception e){
+            e.printStackTrace();
+            updated = 0;
+        } finally {
             db.close();
-            return false;
         }
 
-        db.close();
-        return true;
+        return updated == 1;
     }
 
 
@@ -111,7 +128,7 @@ public class AppointmentController extends BaseController {
         status == null){
             return -1;
         }
-
+        long id;
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -123,9 +140,14 @@ public class AppointmentController extends BaseController {
         values.put(Contracts.AppointmentEntry.HOUR, hour);
         values.put(Contracts.AppointmentEntry.STATUS, status.ordinal());
 
-        long id = db.insert(Contracts.AppointmentEntry.TABLE_NAME, null, values);
-
-        db.close();
+        try {
+            id = db.insert(Contracts.AppointmentEntry.TABLE_NAME, null, values);
+        } catch (Exception e){
+            e.printStackTrace();
+            id = -1;
+        } finally {
+            db.close();
+        }
         return id;
     }
 
@@ -138,9 +160,8 @@ public class AppointmentController extends BaseController {
 
         SQLiteDatabase db = sqlHelper.getReadableDatabase();
 
-
         Cursor cursor = db.query(Contracts.AppointmentEntry.TABLE_NAME, Contracts.AppointmentEntry.Columns,
-                Contracts.AppointmentEntry.ID + " LIKE ?", new String[]{String.valueOf(appointment_id)},
+                String.format(COMPARATOR_STRING, Contracts.AppointmentEntry.ID), new String[]{String.valueOf(appointment_id)},
                 null, null, null);
 
         if (cursor.moveToNext()){
@@ -178,11 +199,13 @@ public class AppointmentController extends BaseController {
 
         if (user.isProfessional()){
             cursor = db.query(Contracts.AppointmentEntry.TABLE_NAME, Contracts.AppointmentEntry.Columns,
-                    Contracts.AppointmentEntry.PROFESSIONAL_ID + " LIKE ?", new String[]{String.valueOf(user.getId())},
+                    String.format(COMPARATOR_STRING, Contracts.AppointmentEntry.PROFESSIONAL_ID),
+                    new String[]{String.valueOf(user.getId())},
                     null, null, null);
         } else {
             cursor = db.query(Contracts.AppointmentEntry.TABLE_NAME, Contracts.AppointmentEntry.Columns,
-                    Contracts.AppointmentEntry.USER_ID + " LIKE ?", new String[]{String.valueOf(user.getId())},
+                    String.format(COMPARATOR_STRING, Contracts.AppointmentEntry.USER_ID),
+                    new String[]{String.valueOf(user.getId())},
                     null, null, null);
         }
 
@@ -269,18 +292,21 @@ public class AppointmentController extends BaseController {
         if (appointment_id == -1 || hour == -1 || day == -1){
             return false;
         }
-
+        int updated;
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(Contracts.AppointmentEntry.DAY, day);
         contentValues.put(Contracts.AppointmentEntry.HOUR, hour);
-        int updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues, String.format("%s = ?", Contracts.AppointmentEntry.ID), new String[]{String.valueOf(appointment_id)});
-
-        db.close();
+        try {
+            updated = db.update(Contracts.AppointmentEntry.TABLE_NAME, contentValues, String.format(COMPARATOR_STRING, Contracts.AppointmentEntry.ID), new String[]{String.valueOf(appointment_id)});
+        } catch (Exception e){
+            e.printStackTrace();
+            updated = 0;
+        } finally {
+            db.close();
+        }
 
         return updated > 0;
     }
-
-
 }

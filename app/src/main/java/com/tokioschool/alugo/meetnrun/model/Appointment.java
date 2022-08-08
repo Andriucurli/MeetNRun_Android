@@ -8,14 +8,13 @@ public class Appointment {
         CANCELLED,
         MODIFICATION_REQUESTED
     }
-
-
-    int appointment_id;
-    int professional_id;
-    int user_id;
-    int day;
-    int hour;
-    Status status;
+    
+    private int appointment_id;
+    private int professional_id;
+    private int user_id;
+    private int day;
+    private int hour;
+    private Status status;
 
 
     public Appointment(int appointment_id, int professional_id, int user_id, int day, int hour, Status status) {

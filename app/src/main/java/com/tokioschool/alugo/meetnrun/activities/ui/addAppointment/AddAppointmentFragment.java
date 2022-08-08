@@ -1,6 +1,11 @@
 package com.tokioschool.alugo.meetnrun.activities.ui.addAppointment;
 
+import static com.tokioschool.alugo.meetnrun.util.Utils.WRITE_CALENDAR_CODE;
+
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -13,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,9 +31,11 @@ import com.tokioschool.alugo.meetnrun.controllers.NotificationController;
 import com.tokioschool.alugo.meetnrun.controllers.UserController;
 import com.tokioschool.alugo.meetnrun.adapters.CustomSpinnerAdapter;
 import com.tokioschool.alugo.meetnrun.databinding.FragmentAddAppointmentBinding;
+import com.tokioschool.alugo.meetnrun.model.Appointment;
 import com.tokioschool.alugo.meetnrun.model.Notification;
 import com.tokioschool.alugo.meetnrun.model.User;
 import com.tokioschool.alugo.meetnrun.util.AlertHandler;
+import com.tokioschool.alugo.meetnrun.util.Preferences;
 import com.tokioschool.alugo.meetnrun.util.Utils;
 
 import java.util.ArrayList;
@@ -211,9 +220,12 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
                 toast.show();
                 return;
             } else {
+                long appointment_id = 0;
+                User anything = null;
                 if (mainActivity.getCurrentUser().isProfessional()){
                     User pacient = pacients.get(pacientPos);
-                    long appointment_id = ac.createAppointment(mainActivity.getCurrentUser().getId(), pacient.getId(), day, hour);
+                    anything = pacient;
+                    appointment_id = ac.createAppointment(mainActivity.getCurrentUser().getId(), pacient.getId(), day, hour);
 
                     if (appointment_id == -1){
                         return;
@@ -223,8 +235,9 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
                     nc.createNotification(mainActivity.getCurrentUser().getId(), pacient.getId(),
                             String.format(context.getString(R.string.description_notification_created), mainActivity.getCurrentUser().getName(), context.getString(dayNameId) , hour), Notification.Type.CREATED, (int) appointment_id);
 
+
                 } else {
-                    long appointment_id = ac.requestAppointment(mainActivity.getCurrentUser().getProfessional_id(), mainActivity.getCurrentUser().getId(), day, hour);
+                    appointment_id = ac.requestAppointment(mainActivity.getCurrentUser().getProfessional_id(), mainActivity.getCurrentUser().getId(), day, hour);
                     if (appointment_id == -1){
                         return;
                     }
@@ -232,7 +245,21 @@ public class AddAppointmentFragment extends Fragment implements AdapterView.OnIt
                     int dayNameId = context.getResources().getIdentifier(dayAux.name(), "string", context.getPackageName());
                     nc.createNotification(mainActivity.getCurrentUser().getId(), mainActivity.getCurrentUser().getProfessional_id(),
                             String.format(context.getString(R.string.description_notification_needsConfirmation), mainActivity.getCurrentUser().getName(), context.getString(dayNameId), hour), Notification.Type.NEED_CONFIRMATION, (int) appointment_id);
+                    anything = uc.getUser(mainActivity.getCurrentUser().getProfessional_id());
                 }
+
+                if (Preferences.get_recordatories_auto(getContext())){
+
+                    Appointment appointment = ac.getAppointment((int) appointment_id);
+
+                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_CALENDAR}, WRITE_CALENDAR_CODE);
+                    } else {
+                        Intent intent = Utils.generateRecordatoryIntent(appointment, anything);
+                        startActivity(intent);
+                    }
+                }
+
                 Toast toast = AlertHandler.getInfoAppointmentCreated(getContext());
                 toast.show();
             }

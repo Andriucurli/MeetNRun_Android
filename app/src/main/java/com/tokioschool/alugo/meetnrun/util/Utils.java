@@ -1,8 +1,20 @@
 package com.tokioschool.alugo.meetnrun.util;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.provider.CalendarContract;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.tokioschool.alugo.meetnrun.model.Appointment;
+import com.tokioschool.alugo.meetnrun.model.User;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class Utils {
 
@@ -116,4 +128,25 @@ public class Utils {
     }
 
 
+    public static Intent generateRecordatoryIntent(Appointment appointment, User user){
+
+            Calendar calendar = Utils.nextDayOfWeek(Utils.getCalendarDay(appointment.getDay()));
+            calendar.set(Calendar.HOUR, appointment.getHour());
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.setTimeZone(TimeZone.getDefault());
+
+            long start = calendar.getTimeInMillis();
+            long end = calendar.getTimeInMillis() + 60 * 60 * 1000;
+
+            Intent intent = new Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.Events.CONTENT_URI)
+                    .setType("vnd.android.cursor.item/event")
+                    .putExtra(CalendarContract.Events.TITLE, String.format("Appointment with %s", user.getSurname()))
+                    .putExtra(CalendarContract.Events.RRULE, "FREQ=WEEKLY;BYDAY="+Utils.getDayByInt(appointment.getDay()).name().toUpperCase()+";")
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, start)
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end);
+
+            return intent;
+    }
 }

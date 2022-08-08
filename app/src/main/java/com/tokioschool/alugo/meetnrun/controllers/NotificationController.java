@@ -27,9 +27,8 @@ public class NotificationController extends BaseController {
             return -1;
         }
 
-
+        long id;
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         // Pares clave-valor
@@ -43,9 +42,15 @@ public class NotificationController extends BaseController {
             values.put(NotificationEntry.APPOINTMENT_ID, appointment_id);
         }
 
-        long id = db.insert(NotificationEntry.TABLE_NAME, null, values);
+        try {
+            id = db.insert(NotificationEntry.TABLE_NAME, null, values);
+        } catch (Exception e){
+            e.printStackTrace();
+            id = -1;
+        } finally {
+            db.close();
+        }
 
-        db.close();
         return id;
     }
 
@@ -85,28 +90,28 @@ public class NotificationController extends BaseController {
     }
 
     public boolean markNotificationAsSeen(int notification_id){
-        boolean result = true;
 
         if (notification_id == -1){
-            result = false;
+            return false;
         }
 
-        if (result){
+        int updated;
             SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(NotificationEntry.SEEN, 1);
 
-            int updated = db.update(NotificationEntry.TABLE_NAME,contentValues,
-                    NotificationEntry.ID + " = ?", new String[]{String.valueOf(notification_id)});
-
-            if (updated != 1){
-                result = false;
+            try {
+                updated = db.update(NotificationEntry.TABLE_NAME,contentValues,
+                        String.format(COMPARATOR_STRING, NotificationEntry.ID),
+                        new String[]{String.valueOf(notification_id)});
+            } catch (Exception e){
+                e.printStackTrace();
+                updated = 0;
+            } finally {
+                db.close();
             }
 
-            db.close();
-        }
-
-        return result;
+        return updated == 1;
     }
 }

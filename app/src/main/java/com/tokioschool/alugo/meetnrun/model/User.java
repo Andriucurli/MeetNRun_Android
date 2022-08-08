@@ -1,14 +1,14 @@
 package com.tokioschool.alugo.meetnrun.model;
 
 public class User {
-    String name;
-    String surname;
-    String pwd = null;
-    int id = 0;
-    String phone;
-    String email;
-    byte[] photo = null;
-    byte[] schedule;
+    private String name;
+    private String surname;
+    private String pwd = null;
+    private int id = 0;
+    private String phone;
+    private String email;
+    private byte[] photo = null;
+    private byte[] schedule;
 
     public void setSchedule(byte[] schedule) {
         this.schedule = schedule;
@@ -36,7 +36,7 @@ public class User {
         this.photo = photo;
     }
 
-    Integer professional_id;
+    private Integer professional_id;
 
     public User(String name, String surname, String pwd, int id, String phone, String email, byte[] photo, Integer professional_id, byte[] schedule) {
         this.name = name;

@@ -2,7 +2,7 @@ package com.tokioschool.alugo.meetnrun.model;
 
 import android.provider.BaseColumns;
 
-public class Contracts {
+public abstract class Contracts {
 
     public static abstract class UserEntry implements BaseColumns {
 

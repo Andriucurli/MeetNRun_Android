@@ -258,26 +258,11 @@ public class AppointmentActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.appointmentAddRecordatoryButton:
+
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, WRITE_CALENDAR_CODE);
                 } else {
-                    Calendar calendar = Utils.nextDayOfWeek(Utils.getCalendarDay(appointment.getDay()));
-                    calendar.set(Calendar.HOUR, appointment.getHour());
-                    calendar.set(Calendar.MINUTE, 0);
-                    calendar.set(Calendar.SECOND, 0);
-                    calendar.setTimeZone(TimeZone.getDefault());
-
-                    long start = calendar.getTimeInMillis();
-                    long end = calendar.getTimeInMillis() + 60 * 60 * 1000;
-
-                    Intent intent = new Intent(Intent.ACTION_INSERT)
-                            .setData(CalendarContract.Events.CONTENT_URI)
-                            .setType("vnd.android.cursor.item/event")
-                            .putExtra(CalendarContract.Events.TITLE, String.format("Appointment with %s", anything.getSurname()))
-                            .putExtra(CalendarContract.Events.RRULE, "FREQ=WEEKLY;BYDAY="+Utils.getDayByInt(appointment.getDay()).name().toUpperCase()+";")
-                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, start)
-                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end);
-
+                    Intent intent = Utils.generateRecordatoryIntent(appointment, anything);
                     startActivity(intent);
                 }
                 break;

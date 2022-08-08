@@ -1,12 +1,12 @@
 package com.tokioschool.alugo.meetnrun.model;
 
 public class Notification {
-    int notification_id;
-    int sender_id;
-    int receiver_id;
-    String message;
-    boolean seen;
-    Integer appointment_id = null;
+    private int notification_id;
+    private int sender_id;
+    private int receiver_id;
+    private String message;
+    private boolean seen;
+    private Integer appointment_id = null;
 
     public int getSender_id() {
         return sender_id;

@@ -59,7 +59,10 @@ public class UserController extends BaseController {
     public User getUser(int id){
         SQLiteDatabase db =  sqlHelper.getReadableDatabase();
 
-        Cursor cursor = db.query(UserEntry.TABLE_NAME, UserEntry.Columns, UserEntry.ID + " LIKE ?", new String[]{String.valueOf(id)}, null, null, null);
+        Cursor cursor = db.query(UserEntry.TABLE_NAME,
+                UserEntry.Columns,
+                String.format(COMPARATOR_STRING, UserEntry.ID),
+                new String[]{String.valueOf(id)}, null, null, null);
 
         User user = null;
 
@@ -77,7 +80,10 @@ public class UserController extends BaseController {
 
         SQLiteDatabase db =  sqlHelper.getReadableDatabase();
 
-        Cursor cursor = db.query(UserEntry.TABLE_NAME, UserEntry.Columns, UserEntry.NAME + " LIKE ?", new String[]{name}, null, null, null);
+        Cursor cursor = db.query(UserEntry.TABLE_NAME,
+                UserEntry.Columns,
+                String.format(COMPARATOR_STRING, UserEntry.NAME),
+                new String[]{name}, null, null, null);
 
         User user = null;
 
@@ -96,7 +102,9 @@ public class UserController extends BaseController {
         List<User> result = new ArrayList<>();
         SQLiteDatabase db = sqlHelper.getReadableDatabase();
 
-        Cursor cursor = db.query(UserEntry.TABLE_NAME, UserEntry.Columns, UserEntry.PROFESSIONAL_ID + " LIKE ?",
+        Cursor cursor = db.query(UserEntry.TABLE_NAME,
+                UserEntry.Columns,
+                String.format(COMPARATOR_STRING, UserEntry.PROFESSIONAL_ID),
                 new String[]{String.valueOf(professional.getId())}, null, null, null);
 
         while (cursor.moveToNext()){
@@ -106,16 +114,31 @@ public class UserController extends BaseController {
         return result;
     }
 
-    public void updateUser(User user){
-        SQLiteDatabase db = sqlHelper.getWritableDatabase();
+    public boolean updateUser(User user){
 
+        if (user == null){
+            return false;
+        }
+
+        SQLiteDatabase db = sqlHelper.getWritableDatabase();
+        int updated;
         ContentValues contentValues = new ContentValues();
         contentValues.put(UserEntry.SURNAME, user.getSurname());
         contentValues.put(UserEntry.EMAIL, user.getEmail());
         contentValues.put(UserEntry.PHONE, user.getPhone());
-        db.update(UserEntry.TABLE_NAME, contentValues, String.format("%s = ?", UserEntry.ID), new String[]{String.valueOf(user.getId())});
 
-        db.close();
+        try {
+            updated = db.update(UserEntry.TABLE_NAME, contentValues,
+                    String.format(COMPARATOR_STRING, UserEntry.ID),
+                    new String[]{String.valueOf(user.getId())});
+        } catch (Exception e){
+            e.printStackTrace();
+            updated = 0;
+        } finally {
+            db.close();
+        }
+
+        return updated == 1;
     }
 
     public long createProfessional(String name, String password, String surname){
@@ -136,7 +159,7 @@ public class UserController extends BaseController {
         }
 
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
-
+        long id;
         ContentValues values = new ContentValues();
 
         // Pares clave-valor
@@ -149,37 +172,79 @@ public class UserController extends BaseController {
             values.put(Contracts.UserEntry.SCHEDULE, initialScheduleByDay);
         }
 
-        long id = db.insert(UserEntry.TABLE_NAME, null, values);
-
-        db.close();
+        try {
+            id = db.insert(UserEntry.TABLE_NAME, null, values);
+        } catch (Exception e){
+            e.printStackTrace();
+            id = -1;
+        } finally {
+            db.close();
+        }
 
         return id;
     }
 
-    public void setUserPhoto(User user, Uri photo) throws IOException {
-        InputStream iStream =   context.getContentResolver().openInputStream(photo);
-        byte[] inputData = getBytes(iStream);
+    public boolean setUserPhoto(User user, Uri photo) {
 
-        SQLiteDatabase db = sqlHelper.getWritableDatabase();
+        if (user == null || photo == null){
+            return false;
+        }
+        int updated = 0;
+        byte[] inputData;
+        try {
+            InputStream iStream =  context.getContentResolver().openInputStream(photo);
+            inputData = getBytes(iStream);
+        } catch (Exception e){
+            e.printStackTrace();
+            inputData = null;
+        }
 
-        ContentValues values = new ContentValues();
-        values.put(UserEntry.PHOTO, inputData);
+        if (inputData != null){
+            SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
-        db.update(UserEntry.TABLE_NAME,values, UserEntry.ID + " LIKE ?", new String[]{String.valueOf(user.getId())});
-        user.setPhoto(inputData);
-        db.close();
+            ContentValues values = new ContentValues();
+            values.put(UserEntry.PHOTO, inputData);
 
+            try {
+                updated = db.update(UserEntry.TABLE_NAME,values,
+                        String.format(COMPARATOR_STRING, UserEntry.ID),
+                        new String[]{String.valueOf(user.getId())});
+            } catch (Exception e){
+                e.printStackTrace();
+                updated = 0;
+            } finally {
+                db.close();
+                user.setPhoto(inputData);
+            }
+        }
+
+        return updated == 1;
     }
 
-    public void setSchedule(User user, byte[] schedule){
+    public boolean setSchedule(User user, byte[] schedule){
+
+        if (user == null || schedule == null){
+            return false;
+        }
+
+        int updated;
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(UserEntry.SCHEDULE, schedule);
+        try {
+            updated = db.update(UserEntry.TABLE_NAME, values,
+                    String.format(COMPARATOR_STRING, UserEntry.ID),
+                    new String[]{String.valueOf(user.getId())});
+            user.setSchedule(schedule);
+        } catch (Exception e){
+            e.printStackTrace();
+            updated = 0;
+        } finally {
+            db.close();
+        }
 
-        db.update(UserEntry.TABLE_NAME, values, UserEntry.ID + " = ?", new String[]{String.valueOf(user.getId())});
-
-        user.setSchedule(schedule);
+        return updated == 1;
     }
 
 
@@ -187,11 +252,12 @@ public class UserController extends BaseController {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
-
         int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
+
+            while ((len = inputStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+
         return byteBuffer.toByteArray();
     }
 }
