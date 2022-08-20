@@ -2,6 +2,8 @@ package com.tokioschool.alugo.meetnrun.activities.ui.list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +30,8 @@ import com.tokioschool.alugo.meetnrun.adapters.AppointmentViewAdapter;
 import com.tokioschool.alugo.meetnrun.databinding.FragmentListBinding;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ListFragment extends Fragment {
 
@@ -83,17 +87,31 @@ public class ListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        List data = ac.getActiveAppointments(homeActivity.getCurrentUser());
+        ExecutorService fillingListExec = Executors.newSingleThreadExecutor();
 
-        if (data.isEmpty()){
-            noAppointmentsTextView.setVisibility(View.VISIBLE);
-            appointmentsRV.setVisibility(View.GONE);
-        } else {
-            noAppointmentsTextView.setVisibility(View.GONE);
-            appointmentsRV.setVisibility(View.VISIBLE);
-            adapter.setData(data);
-            adapter.notifyDataSetChanged();
-        }
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        fillingListExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                List data = ac.getActiveAppointments(homeActivity.getCurrentUser());
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (data.isEmpty()){
+                            noAppointmentsTextView.setVisibility(View.VISIBLE);
+                            appointmentsRV.setVisibility(View.GONE);
+                        } else {
+                            noAppointmentsTextView.setVisibility(View.GONE);
+                            appointmentsRV.setVisibility(View.VISIBLE);
+                            adapter.setData(data);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override

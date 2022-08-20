@@ -4,6 +4,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import com.tokioschool.alugo.meetnrun.adapters.NotificationViewAdapter;
 import com.tokioschool.alugo.meetnrun.model.Notification;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NotificationsActivity extends BaseActivity {
 
@@ -31,15 +35,13 @@ public class NotificationsActivity extends BaseActivity {
         }
         nc = new NotificationController(this);
 
-        noNotificationsTextView = (TextView) findViewById(R.id.no_notifications_textView);
-        notificationsRV = (RecyclerView) findViewById(R.id.notificationsRecyclerView);
+        noNotificationsTextView = findViewById(R.id.no_notifications_textView);
+        notificationsRV = findViewById(R.id.notificationsRecyclerView);
         notificationsRV.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         notificationsRV.setLayoutManager(llm);
-
-        List<Notification> notifications = nc.getActiveNotificationsByUser(currentUser);
-
         adapter = new NotificationViewAdapter(this);
+
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -54,9 +56,16 @@ public class NotificationsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        List<Notification> data = nc.getActiveNotificationsByUser(currentUser);
-        adapter.setData(data);
-        adapter.notifyDataSetChanged();
+        ExecutorService fillingListExec = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        fillingListExec.execute(() -> {
+            List<Notification> data = nc.getActiveNotificationsByUser(currentUser);
+            handler.post(() -> {
+                adapter.setData(data);
+                adapter.notifyDataSetChanged();
+            });
+        });
     }
 
     private void loadUI(List<Notification> data){

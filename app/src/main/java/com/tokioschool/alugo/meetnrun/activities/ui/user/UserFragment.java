@@ -12,6 +12,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,6 +57,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class UserFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
@@ -91,11 +95,8 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         uc = activity.getUserController();
         ac = new AppointmentController(getContext());
         addUserLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        return;
-                    }
+                result -> {
+                    return;
                 });
         changePhotolauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
             if (!result){
@@ -109,12 +110,7 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
                 return;
             }
             photoView.setImageBitmap(bitmap);
-            try {
-                uc.setUserPhoto(activity.getCurrentUser(), photoUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
+            uc.setUserPhoto(activity.getCurrentUser(), photoUri);
         });
 
         return root;
@@ -181,8 +177,24 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         emailTextField.setText(currentUser.getEmail());
 
         if (currentUser.getPhoto() != null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(currentUser.getPhoto(), 0, currentUser.getPhoto().length);
-            photoView.setImageBitmap(Bitmap.createScaledBitmap(bmp, photoView.getWidth(), photoView.getHeight(), false));
+
+            ExecutorService loadPhotoExec = Executors.newSingleThreadExecutor();
+            Handler photoHandler = new Handler(Looper.getMainLooper());
+
+            loadPhotoExec.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(currentUser.getPhoto(), 0, currentUser.getPhoto().length);
+                    Bitmap scaled = Bitmap.createScaledBitmap(bmp, photoView.getWidth(), photoView.getHeight(), false);
+
+                    photoHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            photoView.setImageBitmap(scaled);
+                        }
+                    });
+                }
+            });
         }
 
         if (currentUser.isProfessional()){
