@@ -1,12 +1,34 @@
 package com.tokioschool.alugo.meetnrun.model;
 
+import androidx.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class Appointment {
 
-    public enum Status{
-        REQUESTED,
-        CONFIRMED,
-        CANCELLED,
-        MODIFICATION_REQUESTED
+    @IntDef({Status.REQUESTED, Status.CONFIRMED, Status.CANCELLED, Status.MODIFICATION_REQUESTED})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Status {
+        public int REQUESTED = 0;
+        int CONFIRMED = 1;
+        int CANCELLED = 2;
+        int MODIFICATION_REQUESTED = 3;
+    }
+
+    public static String getStatusString(@Status int status){
+        switch (status){
+            case Status.REQUESTED:
+                return "REQUESTED";
+            case Status.CONFIRMED:
+                return "CONFIRMED";
+            case Status.CANCELLED:
+                return "CANCELLED";
+            case Status.MODIFICATION_REQUESTED:
+                return "MODIFICATION_REQUESTED";
+            default:
+                return null;
+        }
     }
     
     private int appointment_id;
@@ -14,10 +36,11 @@ public class Appointment {
     private int user_id;
     private int day;
     private int hour;
-    private Status status;
+    @Status
+    private int status;
 
 
-    public Appointment(int appointment_id, int professional_id, int user_id, int day, int hour, Status status) {
+    public Appointment(int appointment_id, int professional_id, int user_id, int day, int hour, @Status int status) {
         this.appointment_id = appointment_id;
         this.professional_id = professional_id;
         this.user_id = user_id;
@@ -46,7 +69,7 @@ public class Appointment {
         return hour;
     }
 
-    public Status getStatus() {
+    public @Status int getStatus() {
         return status;
     }
 }

@@ -80,4 +80,16 @@ public class AlertHandler {
     public static Toast getInfoAppointmentCreated(Context context){
         return Toast.makeText(context, R.string.message_info_appointmentCreated, Toast.LENGTH_LONG);
     }
+
+    public static Toast getWarningNoPhone(Context context){
+        return Toast.makeText(context, R.string.message_warning_noPhone, Toast.LENGTH_SHORT);
+    }
+
+    public static Toast getWarningNoEmail(Context context){
+        return Toast.makeText(context, R.string.message_warning_noEmail, Toast.LENGTH_SHORT);
+    }
+
+    public static Toast getWarningUserNotCreated(Context context) {
+        return Toast.makeText(context, R.string.message_warning_userNotCreated, Toast.LENGTH_SHORT);
+    }
 }

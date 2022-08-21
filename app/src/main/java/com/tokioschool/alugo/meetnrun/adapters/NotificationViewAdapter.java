@@ -113,13 +113,13 @@ public class NotificationViewAdapter extends RecyclerView.Adapter<NotificationVi
                     }
 
                     switch (notification.getType()){
-                        case NEED_CONFIRMATION:
+                        case Notification.Type.NEED_CONFIRMATION:
                             if (ac.confirmAppointment(appointment_id)){
                                 Appointment appointment = ac.getAppointment(appointment_id);
                                 nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), context.getString(R.string.notification_text_appointment_confirmed), Notification.Type.CONFIRMED, appointment_id);
                             }
                             break;
-                        case NEED_MODIFICATION:
+                        case Notification.Type.NEED_MODIFICATION:
                             if (ac.acceptModification(appointment_id)){
                                 Appointment appointment = ac.getAppointment(appointment_id);
                                 nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(),
@@ -137,13 +137,13 @@ public class NotificationViewAdapter extends RecyclerView.Adapter<NotificationVi
                         return;
                     }
                     switch (notification.getType()){
-                        case NEED_CONFIRMATION:
+                        case Notification.Type.NEED_CONFIRMATION:
                             if (ac.rejectAppointment(appointment_id)){
                                 Appointment appointment = ac.getAppointment(appointment_id);
                                 nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), context.getString(R.string.notification_text_appointment_cancelled), Notification.Type.CANCELLED, appointment_id);
                             }
                             break;
-                        case NEED_MODIFICATION:
+                        case Notification.Type.NEED_MODIFICATION:
                             if (ac.rejectModification(appointment_id)){
                                 Appointment appointment = ac.getAppointment(appointment_id);
                                 nc.createNotification(appointment.getProfessional_id(), appointment.getUser_id(), context.getString(R.string.notification_text_modification_rejected), Notification.Type.CANCELLED, appointment_id);

@@ -95,4 +95,7 @@
     <string name="notification_text_appointment_cancelled">Appointment Cancelled</string>
     <string name="notification_text_modification_accepted">Modification Accepted</string>
     <string name="notification_text_modification_rejected">Modification Rejected</string>
+    <string name="message_warning_noPhone">Call unavailable, the user didn\'t introduce a valid phone number</string>
+    <string name="message_warning_noEmail">Email unavailable, the user didn\'t introduce a valid email address</string>
+    <string name="message_warning_userNotCreated">User cannot be created. Please, check the information or try it later.</string>
 </resources>

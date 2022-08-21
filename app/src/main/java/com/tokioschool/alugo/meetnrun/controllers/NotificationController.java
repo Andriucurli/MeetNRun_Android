@@ -19,11 +19,10 @@ public class NotificationController extends BaseController {
         super(context);
     }
 
-    public long createNotification(int sender_id, int receiver_id, String message, Notification.Type type, Integer appointment_id){
+    public long createNotification(int sender_id, int receiver_id, String message, @Notification.Type int type, Integer appointment_id){
 
         if (sender_id == -1 ||
-        receiver_id == -1 ||
-        type == null){
+        receiver_id == -1){
             return -1;
         }
 
@@ -36,7 +35,7 @@ public class NotificationController extends BaseController {
         values.put(NotificationEntry.RECEIVER_ID, receiver_id);
         values.put(NotificationEntry.MESSAGE, message);
         values.put(NotificationEntry.SEEN, 0);
-        values.put(NotificationEntry.TYPE, type.name());
+        values.put(NotificationEntry.TYPE, type);
 
         if (appointment_id != null){
             values.put(NotificationEntry.APPOINTMENT_ID, appointment_id);
@@ -80,7 +79,7 @@ public class NotificationController extends BaseController {
 
             result.add(new Notification(cursor.getInt(id),sender_id, user.getId(), cursor.getString(messageI),
                     cursor.getInt(seenI) == 1,
-                    Notification.Type.valueOf(cursor.getString(typeI)),
+                    cursor.getInt(typeI),
                     appointment_id));
         }
 

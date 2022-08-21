@@ -158,6 +158,12 @@ public class UserController extends BaseController {
             return -1;
         }
 
+        User createdUser = getUser(name);
+
+        if (createdUser != null){
+            return -1;
+        }
+
         SQLiteDatabase db = sqlHelper.getWritableDatabase();
         long id;
         ContentValues values = new ContentValues();

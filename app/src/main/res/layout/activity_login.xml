@@ -114,7 +114,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/sign_up_as_a_pacient"
-            android:textColor="#424242" />
+            android:textColor="#424242"
+            android:visibility="gone" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

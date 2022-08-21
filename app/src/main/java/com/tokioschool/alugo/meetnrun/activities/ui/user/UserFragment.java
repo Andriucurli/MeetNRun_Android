@@ -96,8 +96,16 @@ public class UserFragment extends Fragment implements CompoundButton.OnCheckedCh
         ac = new AppointmentController(getContext());
         addUserLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    return;
-                });
+            int code = result.getResultCode();
+            Toast toast;
+            if (code == -1){
+                toast = AlertHandler.getWarningUserNotCreated(getActivity());
+            } else {
+                toast = AlertHandler.getInfoUserCreated(getActivity());
+            }
+            toast.show();
+            return;
+        });
         changePhotolauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
             if (!result){
                 return;

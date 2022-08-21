@@ -1,5 +1,10 @@
 package com.tokioschool.alugo.meetnrun.model;
 
+import androidx.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class Notification {
     private int notification_id;
     private int sender_id;
@@ -24,7 +29,7 @@ public class Notification {
         return seen;
     }
 
-    public Type getType() {
+    public @Type int getType() {
         return type;
     }
 
@@ -36,18 +41,21 @@ public class Notification {
         return notification_id;
     }
 
-    Type type;
+    @Type int type;
 
-    public enum Type {
-        CREATED,
-        NEED_CONFIRMATION,
-        CONFIRMED,
-        NEED_MODIFICATION,
-        MODIFIED,
-        CANCELLED
+
+    @IntDef({Type.CREATED, Type.NEED_CONFIRMATION, Type.CONFIRMED, Type.NEED_MODIFICATION, Type.MODIFIED, Type.CANCELLED})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {
+        public int CREATED = 0;
+        int NEED_CONFIRMATION = 1;
+        int CONFIRMED = 2;
+        int NEED_MODIFICATION = 3;
+        int MODIFIED = 4;
+        int CANCELLED = 5;
     }
 
-    public Notification(int notification_id, int sender_id, int receiver_id, String message, boolean seen, Type type, Integer appointment_id) {
+    public Notification(int notification_id, int sender_id, int receiver_id, String message, boolean seen, @Type int type, Integer appointment_id) {
         this.notification_id = notification_id;
         this.sender_id = sender_id;
         this.receiver_id = receiver_id;

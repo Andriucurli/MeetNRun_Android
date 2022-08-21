@@ -250,12 +250,18 @@ public class AppointmentActivity extends BaseActivity implements View.OnClickLis
                 alert.show();
                 break;
             case R.id.appointmentCallButton:
-                Intent call = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + anything.getPhone()));
-                if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, CALL_REQUEST_CODE);
+                if (anything.getPhone() != null && anything.getPhone().compareTo("") != 0){
+                    Intent call = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + anything.getPhone()));
+                    if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, CALL_REQUEST_CODE);
+                    } else {
+                        startActivity(call);
+                    }
                 } else {
-                    startActivity(call);
+                    Toast toast = AlertHandler.getWarningNoPhone(this);
+                    toast.show();
                 }
+
                 break;
             case R.id.appointmentAddRecordatoryButton:
 
@@ -267,12 +273,18 @@ public class AppointmentActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.appointmentMailButton:
-                Intent emailSend = new Intent(Intent.ACTION_SENDTO);
-                emailSend.setData(Uri.parse("mailto:")); // only email apps should handle this
-                emailSend.putExtra(Intent.EXTRA_EMAIL, new String[]{anything.getEmail()});
-                if (emailSend.resolveActivity(getPackageManager()) != null){
-                    startActivity(emailSend);
+                if (anything.getEmail() != null && anything.getEmail().compareTo("") != 0){
+                    Intent emailSend = new Intent(Intent.ACTION_SENDTO);
+                    emailSend.setData(Uri.parse("mailto:")); // only email apps should handle this
+                    emailSend.putExtra(Intent.EXTRA_EMAIL, new String[]{anything.getEmail()});
+                    if (emailSend.resolveActivity(getPackageManager()) != null){
+                        startActivity(emailSend);
+                    }
+                } else {
+                    Toast toast = AlertHandler.getWarningNoEmail(this);
+                    toast.show();
                 }
+
                 break;
         }
     }

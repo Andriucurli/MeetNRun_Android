@@ -59,7 +59,8 @@ public class QRCodeActivity extends BaseActivity implements View.OnClickListener
         pacientEmail.getText().toString().compareTo("") == 0){
 
         } else {
-            userController.createPacient(pacientSurname.getText().toString(), pacientEmail.getText().toString(), currentUser.getId());
+            long id = userController.createPacient(pacientSurname.getText().toString(), pacientEmail.getText().toString(), currentUser.getId());
+            setResult((int) id);
             finish();
         }
 

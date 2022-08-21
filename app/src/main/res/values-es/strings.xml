@@ -65,4 +65,7 @@
     <string name="notification_text_appointment_cancelled">Cita cancelada</string>
     <string name="notification_text_modification_accepted">Modificación aceptada</string>
     <string name="notification_text_modification_rejected">Modificación rechazada</string>
+    <string name="message_warning_noPhone">Llamada no disponible, el usuario no ha introducido su número</string>
+    <string name="message_warning_noEmail">Email no disponible, el usuario no ha introducido su email</string>
+    <string name="message_warning_userNotCreated">El usuario no puede ser creado. Por favor, compruebe la información o intentelo más tarde.</string>
 </resources>

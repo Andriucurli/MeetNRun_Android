@@ -108,8 +108,8 @@ public class Utils {
         return day;
     }
 
-    public static Appointment.Status getAppointmentStatusByInt(int i){
-        Appointment.Status status;
+    public static @Appointment.Status int getAppointmentStatusByInt(int i){
+        @Appointment.Status int status;
         switch (i){
             case 0:
                 status = Appointment.Status.REQUESTED;
